@@ -1,6 +1,6 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
-import {Page, Card, Banner } from '@shopify/polaris';
+import {Page, Card, Banner, Button } from '@shopify/polaris';
 import { EmbeddedApp, ResourcePicker } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 
@@ -12,6 +12,12 @@ const apiKey = process.env.SHOPIFY_API_KEY;
 
 
 export default class MyApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    }
+  }
   render() {
     return (
       <EmbeddedApp
@@ -19,7 +25,7 @@ export default class MyApp extends React.Component {
         shopOrigin={shopOrigin}
         forceRedirect
         debug
-      >
+      > 
         <Page title="Example application">
 
           <Banner title="Yay it worked!">
@@ -34,10 +40,20 @@ export default class MyApp extends React.Component {
             <p>
               Insert the rest of your app here, including those components detailed below, which can now communicate with the Embedded App SDK.
             </p>
+            <Button
+              onClick={() => {
+                this.setState({
+                  open:true
+                });
+              }}
+            >
+              Select Prodcuts
+            </Button>
           </Card>
           <ResourcePicker
             products
-            open
+            allowMultiple
+            open={this.state.open}
             onSelection={(resources) => {
               console.log('Selected products: ', resources.products);
               this.setState({open: false});
