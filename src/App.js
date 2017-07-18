@@ -1,7 +1,7 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
 import {Page, Card, Banner } from '@shopify/polaris';
-import { EmbeddedApp, Alert } from '@shopify/polaris/embedded';
+import { EmbeddedApp, ResourcePicker } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -35,15 +35,15 @@ export default class MyApp extends React.Component {
               Insert the rest of your app here, including those components detailed below, which can now communicate with the Embedded App SDK.
             </p>
           </Card>
-
-          <Alert
-            title="Accept terms and conditions"
+          <ResourcePicker
+            products
             open
-            confirmContent="I accept"
-            onConfirm={() => this.setState({open: false, confirmed: true})}
-          >
-            You must accept the terms and conditions before proceeding.
-          </Alert>
+            onSelection={(resources) => {
+              console.log('Selected products: ', resources.products);
+              this.setState({open: false});
+            }}
+            onCancel={() => this.setState({open: false})}
+          />
         </Page>
       </EmbeddedApp>
     );
