@@ -6,10 +6,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// const shop = new URLSearchParams(window.location.search).get('shop');
-// const shopOrigin = (shop) ? `https://${shop}` : undefined;
-// const apiKey = new URLSearchParams(window.location.search).get('apiKey');
-const shopOrigin = 'https://max-tutorial-app-store.myshopify.com';
+const shop = new URLSearchParams(window.location.search).get('shop');
+const shopOrigin = (shop) ? `https://${shop}` : undefined;
 const apiKey = process.env.SHOPIFY_API_KEY;
 
 
