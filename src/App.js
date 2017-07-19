@@ -26,7 +26,6 @@ export default class MyApp extends React.Component {
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: <TextStyle variation="subdued">`${product.variantCount} variants`</TextStyle>,
-      badges: product.tags.map((t) => { return { content: t } })
     }
   }
 
