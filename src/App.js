@@ -28,7 +28,7 @@ export default class MyApp extends React.Component {
 
   parseProduct(product) {
     return {
-      url: () => this.context.easdk.redirect(`/products/${product.id}`),
+      url: `/products/${product.id}`,
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: `${product.variantCount} variants`
