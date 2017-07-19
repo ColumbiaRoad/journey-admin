@@ -33,7 +33,9 @@ export default class MyApp extends React.Component {
     return (
       <ResourceList
         items={this.state.selectedProducts.map(this.parseProduct)}
-        renderItem={() => {}}
+        renderItem={(item, index) => {
+          return <ResourceList.Item key={index} {...item} />;
+        }}
       />
     );
   }
