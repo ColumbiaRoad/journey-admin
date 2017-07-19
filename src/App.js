@@ -28,10 +28,11 @@ export default class MyApp extends React.Component {
 
   parseProduct(product) {
     return {
-      url: `/products/${product.id}`,
+      url: '#',
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
-      attributeThree: `${product.variantCount} variants`
+      attributeThree: `${product.variantCount} variants`,
+      actions: [{content: 'View Product', onClick: () => this.context.easdk.redirect(`/products/${product.id}`)}]
     }
   }
 
@@ -39,9 +40,10 @@ export default class MyApp extends React.Component {
     return (
       <Card title='Selected Products'>
         <ResourceList
-          items={this.state.selectedProducts.map(this.parseProduct)}
+          items={this.state.selectedProducts}
           renderItem={(item, index) => {
-            return <ResourceList.Item key={index} {...item} />;
+            const parsed = this.parseProduct(item);
+            return <ResourceList.Item key={index} {...parsed} />;
           }}
         />
       </Card>
