@@ -1,6 +1,6 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
-import {Page, Card, Banner, Button, ResourceList, TextStyle  } from '@shopify/polaris';
+import {Page, Card, Banner, Button, ResourceList } from '@shopify/polaris';
 import { EmbeddedApp, ResourcePicker } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 
@@ -22,21 +22,23 @@ export default class MyApp extends React.Component {
 
   parseProduct(product) {
     return {
-      url: '#',
+      url: `${shopOrigin}/admin/products/${product.id}`,
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
-      attributeThree: <TextStyle variation="subdued">`${product.variantCount} variants`</TextStyle>,
+      attributeThree: `${product.variantCount} variants`
     }
   }
 
   renderSelectedProducts() {
     return (
-      <ResourceList
-        items={this.state.selectedProducts.map(this.parseProduct)}
-        renderItem={(item, index) => {
-          return <ResourceList.Item key={index} {...item} />;
-        }}
-      />
+      <Card>
+        <ResourceList
+          items={this.state.selectedProducts.map(this.parseProduct)}
+          renderItem={(item, index) => {
+            return <ResourceList.Item key={index} {...item} />;
+          }}
+        />
+      </Card>
     );
   }
 
@@ -48,8 +50,7 @@ export default class MyApp extends React.Component {
         forceRedirect
         debug
       > 
-        <Page title="Example application">
-
+        <Page>
           <Banner title="Yay it worked!">
             <p>The embedded polaris app has been successfully loaded</p>
           </Banner>
