@@ -1,7 +1,8 @@
 import React from 'react';
-// import URLSearchParams from 'url-search-params';
-import {Page, Card, Banner, Button, ResourceList } from '@shopify/polaris';
+import PropTypes from 'prop-types';
+import { Page, Card, Banner, Button, ResourceList } from '@shopify/polaris';
 import { EmbeddedApp, ResourcePicker } from '@shopify/polaris/embedded';
+import URLSearchParams from 'url-search-params';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,6 +13,11 @@ const apiKey = process.env.SHOPIFY_API_KEY;
 
 
 export default class MyApp extends React.Component {
+
+  static contextTypes = {
+    easdk: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +28,7 @@ export default class MyApp extends React.Component {
 
   parseProduct(product) {
     return {
-      url: `${shopOrigin}/admin/products/${product.id}`,
+      url: () => this.context.easdk.redirect(`/products/${product.id}`),
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: `${product.variantCount} variants`
@@ -31,7 +37,7 @@ export default class MyApp extends React.Component {
 
   renderSelectedProducts() {
     return (
-      <Card>
+      <Card title='Selected Products'>
         <ResourceList
           items={this.state.selectedProducts.map(this.parseProduct)}
           renderItem={(item, index) => {
