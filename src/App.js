@@ -1,6 +1,6 @@
 import React from 'react';
 // import URLSearchParams from 'url-search-params';
-import {Page, Card, Banner, Button } from '@shopify/polaris';
+import {Page, Card, Banner, Button, ResourceList, TextStyle  } from '@shopify/polaris';
 import { EmbeddedApp, ResourcePicker } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 
@@ -15,9 +15,30 @@ export default class MyApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      selectedProducts: []
     }
   }
+
+  parseProduct(product) {
+    return {
+      url: '#',
+      attributeOne: product.title,
+      attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
+      attributeThree: <TextStyle variation="subdued">`${product.variantCount} variants`</TextStyle>,
+      badges: product.tags.map((t) => { return { content: t } })
+    }
+  }
+
+  renderSelectedProducts() {
+    return (
+      <ResourceList
+        items={this.state.selectedProducts.map(this.parseProduct)}
+        renderItem={() => {}}
+      />
+    );
+  }
+
   render() {
     return (
       <EmbeddedApp
@@ -33,13 +54,6 @@ export default class MyApp extends React.Component {
           </Banner>
 
           <Card sectioned>
-            <p>
-              Go to <strong>http://localhost:3000/login?shop=&lt;your-shop&gt;.myshopify.com&apiKey=&lt;your-app-api-key&gt;</strong> to see how your embedded app work with Polaris
-            </p>
-            <br/>
-            <p>
-              Insert the rest of your app here, including those components detailed below, which can now communicate with the Embedded App SDK.
-            </p>
             <Button
               onClick={() => {
                 this.setState({
@@ -55,11 +69,24 @@ export default class MyApp extends React.Component {
             allowMultiple
             open={this.state.open}
             onSelection={(resources) => {
-              console.log('Selected products: ', resources.products);
-              this.setState({open: false});
+              const selectedProducts = resources.products.map((p) => {
+                return {
+                  id: p.id,
+                  title: p.title,
+                  options: p.options,
+                  variantCount: p.variants.length,
+                  tags: p.tags
+                };
+              });
+              console.log('Selected products: ', selectedProducts);
+              this.setState({
+                open: false,
+                selectedProducts: selectedProducts
+              });
             }}
             onCancel={() => this.setState({open: false})}
           />
+          { this.state.selectedProducts.length > 0 && this.renderSelectedProducts() }
         </Page>
       </EmbeddedApp>
     );
