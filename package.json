@@ -8,6 +8,8 @@
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
     "url-search-params": "^0.8.0"
   },
   "devDependencies": {

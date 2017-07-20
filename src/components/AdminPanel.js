@@ -2,17 +2,9 @@ import React from 'react';
 import { Page, Card, Banner, Button } from '@shopify/polaris';
 import { ResourcePicker } from '@shopify/polaris/embedded';
 
-import SelectedProdcutList from './SelectedProductList';
+import SelectedProdcutListContainer from '../containers/SelectedProductListContainer';
 
 export default class AdminPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      selectedProducts: []
-    }
-  }
-
   render() {
     return (
       <Page>
@@ -23,9 +15,7 @@ export default class AdminPanel extends React.Component {
         <Card sectioned>
           <Button
             onClick={() => {
-              this.setState({
-                open:true
-              });
+              this.props.onToggle();
             }}
           >
             Select Prodcuts
@@ -34,7 +24,7 @@ export default class AdminPanel extends React.Component {
         <ResourcePicker
           products
           allowMultiple
-          open={this.state.open}
+          open={this.props.open}
           onSelection={(resources) => {
             const selectedProducts = resources.products.map((p) => {
               return {
@@ -45,15 +35,11 @@ export default class AdminPanel extends React.Component {
                 tags: p.tags
               };
             });
-            console.log('Selected products: ', selectedProducts);
-            this.setState({
-              open: false,
-              selectedProducts: selectedProducts
-            });
+            this.props.onSelect(selectedProducts);
           }}
-          onCancel={() => this.setState({open: false})}
+          onCancel={() => this.props.onToggle()}
         />
-        { this.state.selectedProducts.length > 0 && <SelectedProdcutList /> }
+        { this.props.selection > 0 && <SelectedProdcutListContainer /> }
       </Page>
     );
   }
