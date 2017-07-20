@@ -1,44 +1,16 @@
 import React from 'react';
-import * as PropTypes from 'prop-types';
-import { Page, Card, Banner, Button, ResourceList } from '@shopify/polaris';
+import { Page, Card, Banner, Button } from '@shopify/polaris';
 import { ResourcePicker } from '@shopify/polaris/embedded';
 
-export default class MyApp extends React.Component {
+import SelectedProdcutList from './SelectedProductList';
 
-  static contextTypes = {
-    easdk: PropTypes.object,
-  };
-
+export default class AdminPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       selectedProducts: []
     }
-  }
-
-  parseProduct(product) {
-    return {
-      url: '#',
-      attributeOne: product.title,
-      attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
-      attributeThree: `${product.variantCount} variant(s)`,
-      actions: [{content: 'View Product', onClick: () => this.context.easdk.redirect(`/products/${product.id}`)}]
-    }
-  }
-
-  renderSelectedProducts() {
-    return (
-      <Card title='Selected Products'>
-        <ResourceList
-          items={this.state.selectedProducts}
-          renderItem={(item, index) => {
-            const parsed = this.parseProduct(item);
-            return <ResourceList.Item key={index} {...parsed} />;
-          }}
-        />
-      </Card>
-    );
   }
 
   render() {
@@ -81,7 +53,7 @@ export default class MyApp extends React.Component {
           }}
           onCancel={() => this.setState({open: false})}
         />
-        { this.state.selectedProducts.length > 0 && this.renderSelectedProducts() }
+        { this.state.selectedProducts.length > 0 && <SelectedProdcutList /> }
       </Page>
     );
   }

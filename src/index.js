@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import AdminPanel from './components/AdminPanel';
 import '@shopify/polaris/styles.css';
 import { EmbeddedApp } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
@@ -19,7 +19,7 @@ ReactDOM.render(
         forceRedirect
         debug
       > 
-    <App />
+    <AdminPanel />
   </EmbeddedApp>,
   document.getElementById('root')
 );
