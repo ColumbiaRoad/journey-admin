@@ -21,7 +21,7 @@ export default class SelectedProductList extends React.Component {
     return (
       <Card title='Selected Products'>
         <ResourceList
-          items={this.props.prodcuts}
+          items={this.props.products}
           renderItem={(item, index) => {
             const parsed = this.parseProduct(item);
             return <ResourceList.Item key={index} {...parsed} />;
