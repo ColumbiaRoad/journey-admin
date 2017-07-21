@@ -8,6 +8,11 @@ import '@shopify/polaris/styles.css';
 import { EmbeddedApp } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 import URLSearchParams from 'url-search-params';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
+import Page from './components/Page';
 
 dotenv.config();
 
@@ -35,8 +40,11 @@ ReactDOM.render(
           shopOrigin={shopOrigin}
           forceRedirect
           debug
-        > 
-      <AdminPanelContainer />
+        >
+        <Router>
+          <Route path="/" component={AdminPanelContainer} />
+          <Route path="/page" component={Page} />
+        </Router>
     </EmbeddedApp>
   </Provider>,
   document.getElementById('root')

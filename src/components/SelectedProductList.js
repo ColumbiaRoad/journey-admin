@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ResourceList } from '@shopify/polaris';
+import { withRouter } from 'react-router-dom';
 
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
@@ -14,7 +15,16 @@ export default class SelectedProductList extends React.Component {
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: `${product.variantCount} variant(s)`,
       actions: [
-        { 
+        {
+          content: 'Go to page',
+          onClick: () => {
+            withRouter(({ history }) => {
+              debugger;
+              history.push('/page');
+            });
+          }
+        },
+        {
           content: 'View',
           onClick: () => this.context.easdk.redirect(`/products/${product.id}`)
         },{
