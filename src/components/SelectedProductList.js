@@ -13,7 +13,14 @@ export default class SelectedProductList extends React.Component {
       attributeOne: product.title,
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: `${product.variantCount} variant(s)`,
-      actions: [{content: 'View Product', onClick: () => this.context.easdk.redirect(`/products/${product.id}`)}]
+      actions: [
+        { 
+          content: 'View',
+          onClick: () => this.context.easdk.redirect(`/products/${product.id}`)
+        },{
+          content: 'Delete',
+          onClick: () => this.props.onDelete(product.id)
+        }]
     }
   }
 

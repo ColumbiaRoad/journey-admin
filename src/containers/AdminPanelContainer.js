@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import AdminPanel from '../components/AdminPanel';
 import toggleResourcePickerState from '../actions/resourcePickerOpen';
-import setSelectedProducts from '../actions/selectedProducts';
+import { setSelectedProducts } from '../actions/selectedProducts';
 
 const mapStateToProps = (state) => {
   return {
