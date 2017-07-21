@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ResourceList } from '@shopify/polaris';
+import { withRouter } from 'react-router-dom';
 
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
