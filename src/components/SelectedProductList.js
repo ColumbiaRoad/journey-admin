@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ResourceList } from '@shopify/polaris';
-import { withRouter } from 'react-router-dom';
 
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
@@ -17,7 +16,8 @@ export default class SelectedProductList extends React.Component {
       actions: [
         {
           content: 'Make question to create this variant',
-          onClick: () => this.props.proceedToSurveyQuestions(product),
+          onClick: () => this.props.proceedToSurveyQuestions(product)
+        },
         {
           content: 'View',
           onClick: () => this.context.easdk.redirect(`/products/${product.id}`)

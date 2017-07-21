@@ -21,6 +21,8 @@ const initialState = {
   selectedProducts: []
 };
 
+const store = createStore(reducer, initialState);
+
 // Log every state change
 store.subscribe(() =>
   console.log(store.getState())
