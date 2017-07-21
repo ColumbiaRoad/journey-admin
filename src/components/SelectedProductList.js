@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, ResourceList } from '@shopify/polaris';
-import { withRouter } from 'react-router-dom';
 
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
@@ -18,11 +17,9 @@ export default class SelectedProductList extends React.Component {
         {
           content: 'Go to page',
           onClick: () => {
-            debugger;
-            this.context.easdk.redirect('/page');
+            this.context.easdk.redirect('/apps/journey-assistant/page');
             withRouter(({ history }) => {
-              debugger;
-              //history.push('/page');
+              history.push('/page');
             });
           }
         },
