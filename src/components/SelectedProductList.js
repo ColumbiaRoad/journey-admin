@@ -18,9 +18,11 @@ export default class SelectedProductList extends React.Component {
         {
           content: 'Go to page',
           onClick: () => {
+            debugger;
+            this.context.easdk.redirect('/page');
             withRouter(({ history }) => {
               debugger;
-              history.push('/page');
+              //history.push('/page');
             });
           }
         },
