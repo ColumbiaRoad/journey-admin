@@ -1,14 +1,14 @@
 import resourcePickerOpen from './resourcePickerOpen';
 import jwtToken from './jwtToken';
 import selectedProducts from './selectedProducts';
+import surveyBuilder from './surveyBuilder';
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 
 const adminPanel = combineReducers({
   resourcePickerOpen,
   jwtToken,
   selectedProducts,
-  routing: routerReducer
+  surveyBuilder,
 });
 
 export default adminPanel;

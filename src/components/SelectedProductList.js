@@ -16,14 +16,8 @@ export default class SelectedProductList extends React.Component {
       attributeThree: `${product.variantCount} variant(s)`,
       actions: [
         {
-          content: 'Go to page',
-          onClick: () => {
-            this.context.easdk.redirect('/apps/journey-assistant/page');
-            withRouter(({ history }) => {
-              history.push('/page');
-            });
-          }
-        },
+          content: 'Make question to create this variant',
+          onClick: () => this.props.proceedToSurveyQuestions(product),
         {
           content: 'View',
           onClick: () => this.context.easdk.redirect(`/products/${product.id}`)

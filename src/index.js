@@ -8,13 +8,6 @@ import '@shopify/polaris/styles.css';
 import { EmbeddedApp } from '@shopify/polaris/embedded';
 import dotenv from 'dotenv';
 import URLSearchParams from 'url-search-params';
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
-import Page from './components/Page';
-import { syncHistoryWithStore } from 'react-router-redux';
-import { createHashHistory } from 'history';
 
 dotenv.config();
 
@@ -27,10 +20,6 @@ const initialState = {
   jwtToken: token,
   selectedProducts: []
 };
-
-const store = createStore(reducer, initialState);
-
-const history = syncHistoryWithStore(createHashHistory(), store)
 
 // Log every state change
 store.subscribe(() =>
@@ -45,11 +34,7 @@ ReactDOM.render(
           forceRedirect
           debug
         >
-        <Router history={history} >
-          <Route path="/" component={AdminPanelContainer} >
-            <Route path="/page" component={Page} />
-          </ Route>
-        </Router>
+        <AdminPanelContainer  />
     </EmbeddedApp>
   </Provider>,
   document.getElementById('root')
