@@ -11,8 +11,10 @@ import URLSearchParams from 'url-search-params';
 import {
   BrowserRouter as Router,
   Route
-} from 'react-router-dom'
+} from 'react-router-dom';
 import Page from './components/Page';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { createHashHistory } from 'history';
 
 dotenv.config();
 
@@ -24,9 +26,11 @@ const initialState = {
   resourcePickerOpen: false,
   jwtToken: token,
   selectedProducts: []
-}
+};
 
-let store = createStore(reducer, initialState);
+const store = createStore(reducer, initialState);
+
+const history = syncHistoryWithStore(createHashHistory(), store)
 
 // Log every state change
 store.subscribe(() =>
@@ -41,9 +45,10 @@ ReactDOM.render(
           forceRedirect
           debug
         >
-        <Router>
-          <Route path="/" component={AdminPanelContainer} />
-          <Route path="/page" component={Page} />
+        <Router history={history} >
+          <Route path="/" component={AdminPanelContainer} >
+            <Route path="/page" component={Page} />
+          </ Route>
         </Router>
     </EmbeddedApp>
   </Provider>,
