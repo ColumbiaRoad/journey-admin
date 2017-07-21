@@ -6,10 +6,10 @@
   },
   "proxies": {
     "/api/": {
-      "origin": "https://journey-assistant-api-test-max.herokuapp.com/api/"
+      "origin": "https://journey-assistant-api.herokuapp.com/api/"
     },
     "/auth/": {
-      "origin": "https://journey-assistant-api-test-max.herokuapp.com/auth/"
+      "origin": "https://journey-assistant-api.herokuapp.com/auth/"
     }
   }
 }
