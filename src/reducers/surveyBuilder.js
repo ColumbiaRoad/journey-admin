@@ -4,7 +4,7 @@ const initialState = {
   current_step: 'INITIAL',
 };
 
-const surveyBuilder = (state = initialState(), action) => {
+const surveyBuilder = (state = initialState, action) => {
   switch(action.type) {
     case 'GO_TO_SURVEY_QUESTION':
       return Object.assign(state, {
