@@ -44,10 +44,10 @@ export default class AdminPanel extends React.Component {
               this.props.onToggle();
             }}
           >
-            Select Prodcuts
+            Select Products
           </Button>
         </Card>
-      { (process.env.NODE_ENV !== 'development' && this.props.survey_state === 'INITIAL') &&
+      { (process.env.NODE_ENV !== 'development') &&
           <ProductPicker props={this.props} /> }
       { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutList /> }
