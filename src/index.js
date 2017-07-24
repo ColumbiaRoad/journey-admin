@@ -18,7 +18,8 @@ const apiKey = process.env.SHOPIFY_API_KEY;
 const initialState = {
   resourcePickerOpen: false,
   jwtToken: token,
-  selectedProducts: []
+  selectedProducts: [],
+  surveyBuilder: {},
 };
 
 const store = createStore(reducer, initialState);

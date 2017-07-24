@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     open: state.resourcePickerOpen,
     token: state.jwtToken,
-    selection: state.selectedProducts.length > 0
+    selection: state.selectedProducts.length > 0,
+    survey_state: state.surveyBuilder.current_step,
   };
 };
 

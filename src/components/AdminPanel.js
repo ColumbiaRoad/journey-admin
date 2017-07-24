@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, Card, Banner, Button } from '@shopify/polaris';
 import { ResourcePicker } from '@shopify/polaris/embedded';
+import { SurveyQuestions } from './SurveyQuestions';
 
 import SelectedProdcutListContainer from '../containers/SelectedProductListContainer';
 
@@ -39,7 +40,9 @@ export default class AdminPanel extends React.Component {
           }}
           onCancel={() => this.props.onToggle()}
         />
-        { this.props.selection > 0 && <SelectedProdcutListContainer /> }
+      { (this.props.selection > 0 && this.props.survey_state == 'INITIAL') &&
+          <SelectedProdcutListContainer /> }
+      { (this.props.survey_state == 'SURVEY_QUESTION') && <SurveyQuestions/> }
       </Page>
     );
   }
