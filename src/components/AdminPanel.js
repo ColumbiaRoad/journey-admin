@@ -40,9 +40,10 @@ export default class AdminPanel extends React.Component {
           }}
           onCancel={() => this.props.onToggle()}
         />
-      { (this.props.selection > 0 && this.props.survey_state == 'INITIAL') &&
+      <p> SURVEY_STATE: { this.props.survey_state }</p>
+      { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutListContainer /> }
-      { (this.props.survey_state == 'SURVEY_QUESTION') && <SurveyQuestions/> }
+      { (this.props.survey_state === 'SURVEY_QUESTION') && <SurveyQuestions/> }
       </Page>
     );
   }
