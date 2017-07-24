@@ -4,7 +4,7 @@ import { ResourcePicker } from '@shopify/polaris/embedded';
 
 import SelectedProdcutList from '../containers/SelectedProductListContainer';
 import SurveyQuestions from '../containers/SurveyQuestionsContainer';
-import AnswerQuestions from './AnswerQuestions';
+import AnswerQuestions from '../containers/AnswerQuestionsContainer';
 
 const ProductPicker = props => (
   <ResourcePicker
@@ -29,7 +29,7 @@ const ProductPicker = props => (
 
 export default class AdminPanel extends React.Component {
   render() {
-    if (process.env.DEV !== undefined) {
+    if (process.env.NODE_ENV === 'development') {
         this.props.onSelect(require('../products.json'));
     }
     return (
@@ -47,7 +47,8 @@ export default class AdminPanel extends React.Component {
             Select Prodcuts
           </Button>
         </Card>
-        <ProductPicker {...props} />
+      { (process.env.NODE_ENV !== 'development' && this.props.survey_state === 'INITIAL') &&
+          <ProductPicker props={this.props} /> }
       { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutList /> }
       { (this.props.survey_state === 'SURVEY_QUESTION') && <SurveyQuestions/> }

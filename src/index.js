@@ -14,7 +14,7 @@ dotenv.config();
 const shop = new URLSearchParams(window.location.search).get('shop');
 const shopOrigin = (shop) ? `https://${shop}` : undefined;
 const token = new URLSearchParams(window.location.search).get('token');
-const apiKey = process.env.SHOPIFY_API_KEY;
+const apiKey = process.env.REACT_APP_SHOPIFY_API_KEY;
 
 const store = createStore(reducer);
 
@@ -23,7 +23,7 @@ store.subscribe(() =>
   console.log(store.getState())
 )
 
-if (process.env.DEV === undefined) {
+if (process.env.NODE_ENV !== 'development') {
   ReactDOM.render(
     <Provider store={store}>
       <EmbeddedApp
