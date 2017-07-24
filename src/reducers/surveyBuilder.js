@@ -7,7 +7,7 @@ const initialState = {
 const surveyBuilder = (state = initialState, action) => {
   switch(action.type) {
     case 'GO_TO_SURVEY_QUESTION':
-      return Object.assign(state, {
+      return Object.assign({}, state, {
         product: action.product,
         current_step: 'SURVEY_QUESTION'
       });
