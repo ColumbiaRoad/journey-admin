@@ -7,24 +7,27 @@ import SurveyQuestions from '../containers/SurveyQuestionsContainer';
 import AnswerQuestions from '../containers/AnswerQuestionsContainer';
 
 const ProductPicker = props => (
-  <ResourcePicker
-    products
-    allowMultiple
-    open={props.open}
-    onSelection={(resources) => {
-      const selectedProducts = resources.products.map((p) => {
-        return {
-          id: p.id,
-          title: p.title,
-          options: p.options,
-          variantCount: p.variants.length,
-          tags: p.tags
-        };
-      });
-      props.onSelect(selectedProducts);
-    }}
-    onCancel={() => props.onToggle()}
-  />
+  <div>
+    <p>I am visible!</p>
+    <ResourcePicker
+      products
+      allowMultiple
+      open={props.open}
+      onSelection={(resources) => {
+        const selectedProducts = resources.products.map((p) => {
+          return {
+            id: p.id,
+            title: p.title,
+            options: p.options,
+            variantCount: p.variants.length,
+            tags: p.tags
+          };
+        });
+        props.onSelect(selectedProducts);
+      }}
+      onCancel={() => props.onToggle()}
+    />
+  </div>
 )
 
 export default class AdminPanel extends React.Component {
