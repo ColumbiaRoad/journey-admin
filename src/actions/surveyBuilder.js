@@ -5,3 +5,16 @@ export const goToSurveyQuestion = (product) => {
     product,
   }
 }
+
+export const updateQuestion = (id, value) => {
+  return {
+    type: 'UPDATE_SURVEY_QUESTION',
+    id, value
+  }
+}
+
+export const proceedToAnswers = () => {
+  return {
+    type: 'PROCEED_TO_ANSWERS',
+  }
+}

@@ -44,3 +44,12 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+/*
+DEV
+ReactDOM.render(
+  <Provider store={store}>
+    <AdminPanelContainer  />
+  </Provider>,
+  document.getElementById('root')
+);
+*/

@@ -11,20 +11,16 @@ export default class SurveyQuestions extends React.Component {
           return(
             <FormLayout.Group key={id} >
               <TextField
-                label="question"
-                placeholder="What question would you like to ask your client, to choose the variants?"
-              />
-              <TextField
-                label="How many answers there are for given question?"
-                type="number"
+                label="Question"
+                onChange={(value) => this.props.updateQuestion(id, value)}
+                value={this.props.questions[id]}
               />
             </ FormLayout.Group>
           );
         }) }
-        <Button primary
-          onClick={(form) => {
-            console.log(form);
-          }}
+        <Button
+          primary
+          onClick={() => this.props.proceedToAnswers()}
         > Save questions</Button>
       </FormLayout>
     );
