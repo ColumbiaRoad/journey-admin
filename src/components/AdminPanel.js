@@ -6,13 +6,12 @@ import SelectedProdcutList from '../containers/SelectedProductListContainer';
 import SurveyQuestions from '../containers/SurveyQuestionsContainer';
 import AnswerQuestions from '../containers/AnswerQuestionsContainer';
 
-const ProductPicker = props => (
-  <div>
-    <p>I am visible!</p>
+const ProductPicker = ({ open, onSelect, onToggle }) => {
+  return (
     <ResourcePicker
       products
       allowMultiple
-      open={props.open}
+      open={open}
       onSelection={(resources) => {
         const selectedProducts = resources.products.map((p) => {
           return {
@@ -23,12 +22,12 @@ const ProductPicker = props => (
             tags: p.tags
           };
         });
-        props.onSelect(selectedProducts);
+        onSelect(selectedProducts);
       }}
-      onCancel={() => props.onToggle()}
+      onCancel={() => onToggle()}
     />
-  </div>
-)
+  );
+}
 
 export default class AdminPanel extends React.Component {
   render() {
@@ -51,7 +50,10 @@ export default class AdminPanel extends React.Component {
           </Button>
         </Card>
       { (process.env.NODE_ENV !== 'development') &&
-          <ProductPicker props={this.props} /> }
+          <ProductPicker
+            open={this.props.open}
+            onSelect={this.props.open}
+            onToggle={this.props.onToggle} /> }
       { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutList /> }
       { (this.props.survey_state === 'SURVEY_QUESTION') && <SurveyQuestions/> }
