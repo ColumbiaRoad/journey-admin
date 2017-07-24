@@ -15,14 +15,16 @@ const shop = new URLSearchParams(window.location.search).get('shop');
 const shopOrigin = (shop) ? `https://${shop}` : undefined;
 const token = new URLSearchParams(window.location.search).get('token');
 const apiKey = process.env.SHOPIFY_API_KEY;
+/*
 const initialState = {
   resourcePickerOpen: false,
   jwtToken: token,
   selectedProducts: [],
   surveyBuilder: {},
 };
+*/
 
-const store = createStore(reducer, initialState);
+const store = createStore(reducer);
 
 // Log every state change
 store.subscribe(() =>
