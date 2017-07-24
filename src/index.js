@@ -15,14 +15,6 @@ const shop = new URLSearchParams(window.location.search).get('shop');
 const shopOrigin = (shop) ? `https://${shop}` : undefined;
 const token = new URLSearchParams(window.location.search).get('token');
 const apiKey = process.env.SHOPIFY_API_KEY;
-/*
-const initialState = {
-  resourcePickerOpen: false,
-  jwtToken: token,
-  selectedProducts: [],
-  surveyBuilder: {},
-};
-*/
 
 const store = createStore(reducer);
 
@@ -31,25 +23,25 @@ store.subscribe(() =>
   console.log(store.getState())
 )
 
-ReactDOM.render(
-  <Provider store={store}>
-    <EmbeddedApp
-          apiKey={apiKey}
-          shopOrigin={shopOrigin}
-          forceRedirect
-          debug
-        >
-        <AdminPanelContainer  />
-    </EmbeddedApp>
-  </Provider>,
-  document.getElementById('root')
-);
-/*
-DEV
-ReactDOM.render(
-  <Provider store={store}>
-    <AdminPanelContainer  />
-  </Provider>,
-  document.getElementById('root')
-);
-*/
+if (process.env.DEV === undefined) {
+  ReactDOM.render(
+    <Provider store={store}>
+      <EmbeddedApp
+            apiKey={apiKey}
+            shopOrigin={shopOrigin}
+            forceRedirect
+            debug
+          >
+          <AdminPanelContainer  />
+      </EmbeddedApp>
+    </Provider>,
+    document.getElementById('root')
+  );
+} else {
+  ReactDOM.render(
+    <Provider store={store}>
+      <AdminPanelContainer  />
+    </Provider>,
+    document.getElementById('root')
+  );
+}

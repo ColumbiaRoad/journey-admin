@@ -1,15 +1,37 @@
 import React from 'react';
 import { Page, Card, Banner, Button } from '@shopify/polaris';
 import { ResourcePicker } from '@shopify/polaris/embedded';
-//import products from '../products.json' //COMMENT OUT FOR PRODUCTION
 
 import SelectedProdcutList from '../containers/SelectedProductListContainer';
 import SurveyQuestions from '../containers/SurveyQuestionsContainer';
 import AnswerQuestions from './AnswerQuestions';
 
+const ProductPicker = props => (
+  <ResourcePicker
+    products
+    allowMultiple
+    open={props.open}
+    onSelection={(resources) => {
+      const selectedProducts = resources.products.map((p) => {
+        return {
+          id: p.id,
+          title: p.title,
+          options: p.options,
+          variantCount: p.variants.length,
+          tags: p.tags
+        };
+      });
+      props.onSelect(selectedProducts);
+    }}
+    onCancel={() => props.onToggle()}
+  />
+)
+
 export default class AdminPanel extends React.Component {
   render() {
-    //this.props.onSelect(products);
+    if (process.env.DEV !== undefined) {
+        this.props.onSelect(require('../products.json'));
+    }
     return (
       <Page>
         <Banner title="Yay it worked!">
@@ -25,24 +47,7 @@ export default class AdminPanel extends React.Component {
             Select Prodcuts
           </Button>
         </Card>
-        <ResourcePicker
-          products
-          allowMultiple
-          open={this.props.open}
-          onSelection={(resources) => {
-            const selectedProducts = resources.products.map((p) => {
-              return {
-                id: p.id,
-                title: p.title,
-                options: p.options,
-                variantCount: p.variants.length,
-                tags: p.tags
-              };
-            });
-            this.props.onSelect(selectedProducts);
-          }}
-          onCancel={() => this.props.onToggle()}
-        />
+        <ProductPicker {...props} />
       { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutList /> }
       { (this.props.survey_state === 'SURVEY_QUESTION') && <SurveyQuestions/> }
