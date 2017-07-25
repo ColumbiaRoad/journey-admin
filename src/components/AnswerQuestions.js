@@ -2,7 +2,7 @@ import React from 'react';
 import { FormLayout, TextField, Button, Select, Heading } from '@shopify/polaris';
 
 const AnswerRow = ({ answers, question, questionID, answerID,
-    variants, saveAnswerAndVariant, addNewAnswer }) => {
+    variants, saveAnswerAndVariant}) => {
   const readedAnswer = (!answers[question] || !answers[question][answerID]) ?
     '' : answers[question][answerID].answer;
   const readedVariant = (!answers[question] || !answers[question][answerID]) ?
@@ -18,17 +18,13 @@ const AnswerRow = ({ answers, question, questionID, answerID,
         value={readedAnswer}
       />
       <Select
-        label="Variant"
+        label="Corresponding variant"
         options={variants}
         onChange={(variantString) =>
           saveAnswerAndVariant(question, answerID, undefined, variantString)}
         placeholder="Select"
         value={readedVariant}
       />
-      <Button
-        primary
-        onClick={() => addNewAnswer()}
-      > Add new</Button>
     </ FormLayout.Group>
   );
 };
@@ -48,10 +44,14 @@ export default class AnswerQuestions extends React.Component {
                 answerID={answerID}
                 variants={this.props.variants}
                 saveAnswerAndVariant={this.props.saveAnswerAndVariant}
-                addNewAnswer={this.props.addNewAnswer} />
+                addNewAnswer={this.props.addNewAnswer}
+                lastRow={(answerID + 1 === this.props.answerIDs.length)} />
             );
           });
         }) }
+        <Button
+          onClick={() => this.props.addNewAnswer()}
+        > Add new answer</Button>
         <Button
           primary
           onClick={() => this.props.saveModel()}
