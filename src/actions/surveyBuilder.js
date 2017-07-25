@@ -18,3 +18,15 @@ export const proceedToAnswers = () => {
     type: 'PROCEED_TO_ANSWERS',
   }
 }
+
+export const saveAnswerAndVariant = (question, answerID, answer, variant) => {
+  return {
+    type: 'SAVE_ANSWER_AND_VARIANT',
+    question, answerID, answer, variant
+  }
+}
+
+export const saveModel = () => {
+  //DO SOME async here!
+  console.log('SAVING MODEL');
+}

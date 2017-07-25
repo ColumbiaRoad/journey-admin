@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormLayout, TextField, Button } from '@shopify/polaris';
+import { FormLayout, TextField, Button, Heading } from '@shopify/polaris';
 
 export default class SurveyQuestions extends React.Component {
   render() {
@@ -7,6 +7,7 @@ export default class SurveyQuestions extends React.Component {
     const questionIDs = [...Array(nbQuestions).keys()];
     return (
       <FormLayout >
+        <Heading>Question about product {this.props.product.title}</Heading>
         { questionIDs.map((id) => {
           return(
             <FormLayout.Group key={id} >

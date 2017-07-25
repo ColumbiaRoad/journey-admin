@@ -52,7 +52,7 @@ export default class AdminPanel extends React.Component {
       { (process.env.NODE_ENV !== 'development') &&
           <ProductPicker
             open={this.props.open}
-            onSelect={this.props.open}
+            onSelect={this.props.onSelect}
             onToggle={this.props.onToggle} /> }
       { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
           <SelectedProdcutList /> }

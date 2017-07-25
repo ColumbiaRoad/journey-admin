@@ -4,7 +4,8 @@ import { updateQuestion, proceedToAnswers } from '../actions/surveyBuilder'
 
 const mapStateToProps = (state) => {
   return {
-    questions: state.surveyBuilder.questions
+    questions: state.surveyBuilder.questions,
+    product: state.surveyBuilder.product
   };
 }
 
