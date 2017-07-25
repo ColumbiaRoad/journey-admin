@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import AnswerQuestions from '../components/AnswerQuestions';
-import { saveAnswerAndVariant, saveModel } from '../actions/surveyBuilder';
+import { saveAnswerAndVariant, saveModel, addNewAnswer } from '../actions/surveyBuilder';
 
 const mapStateToProps = (state) => {
   return {
@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
     product: state.surveyBuilder.product,
     variants: state.surveyBuilder.product.variants.map((v) => v.title),
     answers: state.surveyBuilder.answers,
+    answerIDs: [...Array(state.surveyBuilder.answerCount).keys()], // creates sequence 1,2..n where n=answerCount-1
   };
 }
 
@@ -15,7 +16,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     saveAnswerAndVariant: (question, answerID, answer, variant) =>
       dispatch(saveAnswerAndVariant(question, answerID, answer, variant)),
-    saveModel: () => console.log('SAVE MODEL')
+    saveModel: () => console.log('SAVE MODEL'),
+    addNewAnswer: () => dispatch(addNewAnswer()),
   }
 }
 

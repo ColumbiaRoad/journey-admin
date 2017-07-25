@@ -4,6 +4,7 @@ const initialState = {
   current_step: 'INITIAL',
   questions: [''],
   answers: {},
+  answerCount: 1,
 };
 
 const surveyBuilder = (state = initialState, action) => {
@@ -34,6 +35,10 @@ const surveyBuilder = (state = initialState, action) => {
       allAnswers[action.question][action.answerID] = answerObj;
       return Object.assign({}, state, {
         answers: allAnswers
+      });
+    case 'INCREMENT_ANSWER_COUNT':
+      return Object.assign({}, state, {
+        answerCount: state.answerCount + 1
       });
     default:
       return state;

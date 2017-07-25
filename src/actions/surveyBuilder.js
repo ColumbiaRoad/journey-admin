@@ -26,6 +26,12 @@ export const saveAnswerAndVariant = (question, answerID, answer, variant) => {
   }
 }
 
+export const addNewAnswer = () => {
+  return {
+    type: 'INCREMENT_ANSWER_COUNT',
+  }
+}
+
 export const saveModel = () => {
   //DO SOME async here!
   console.log('SAVING MODEL');
