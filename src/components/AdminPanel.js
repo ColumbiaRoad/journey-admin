@@ -19,7 +19,8 @@ const ProductPicker = ({ open, onSelect, onToggle }) => {
             title: p.title,
             options: p.options,
             variantCount: p.variants.length,
-            tags: p.tags
+            tags: p.tags,
+            variants: p.variants,
           };
         });
         onSelect(selectedProducts);
