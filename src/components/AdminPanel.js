@@ -2,10 +2,39 @@ import React from 'react';
 import { Page, Card, Banner, Button } from '@shopify/polaris';
 import { ResourcePicker } from '@shopify/polaris/embedded';
 
-import SelectedProdcutListContainer from '../containers/SelectedProductListContainer';
+import SelectedProdcutList from '../containers/SelectedProductListContainer';
+import SurveyQuestions from '../containers/SurveyQuestionsContainer';
+import AnswerQuestions from '../containers/AnswerQuestionsContainer';
+
+const ProductPicker = ({ open, onSelect, onToggle }) => {
+  return (
+    <ResourcePicker
+      products
+      allowMultiple
+      open={open}
+      onSelection={(resources) => {
+        const selectedProducts = resources.products.map((p) => {
+          return {
+            id: p.id,
+            title: p.title,
+            options: p.options,
+            variantCount: p.variants.length,
+            tags: p.tags,
+            variants: p.variants,
+          };
+        });
+        onSelect(selectedProducts);
+      }}
+      onCancel={() => onToggle()}
+    />
+  );
+}
 
 export default class AdminPanel extends React.Component {
   render() {
+    if (process.env.NODE_ENV === 'development') {
+        this.props.onSelect(require('../products.json'));
+    }
     return (
       <Page>
         <Banner title="Yay it worked!">
@@ -18,28 +47,18 @@ export default class AdminPanel extends React.Component {
               this.props.onToggle();
             }}
           >
-            Select Prodcuts
+            Select Products
           </Button>
         </Card>
-        <ResourcePicker
-          products
-          allowMultiple
-          open={this.props.open}
-          onSelection={(resources) => {
-            const selectedProducts = resources.products.map((p) => {
-              return {
-                id: p.id,
-                title: p.title,
-                options: p.options,
-                variantCount: p.variants.length,
-                tags: p.tags
-              };
-            });
-            this.props.onSelect(selectedProducts);
-          }}
-          onCancel={() => this.props.onToggle()}
-        />
-        { this.props.selection > 0 && <SelectedProdcutListContainer /> }
+      { (process.env.NODE_ENV !== 'development') &&
+          <ProductPicker
+            open={this.props.open}
+            onSelect={this.props.onSelect}
+            onToggle={this.props.onToggle} /> }
+      { (this.props.selection > 0 && this.props.survey_state === 'INITIAL') &&
+          <SelectedProdcutList /> }
+      { (this.props.survey_state === 'SURVEY_QUESTION') && <SurveyQuestions/> }
+      { (this.props.survey_state === 'ANSWER') && <AnswerQuestions/> }
       </Page>
     );
   }

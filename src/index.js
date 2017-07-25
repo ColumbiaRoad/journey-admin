@@ -14,30 +14,34 @@ dotenv.config();
 const shop = new URLSearchParams(window.location.search).get('shop');
 const shopOrigin = (shop) ? `https://${shop}` : undefined;
 const token = new URLSearchParams(window.location.search).get('token');
-const apiKey = process.env.SHOPIFY_API_KEY;
-const initialState = {
-  resourcePickerOpen: false,
-  jwtToken: token,
-  selectedProducts: []
-}
+const apiKey = process.env.REACT_APP_SHOPIFY_API_KEY;
 
-let store = createStore(reducer, initialState);
+const store = createStore(reducer);
 
 // Log every state change
 store.subscribe(() =>
   console.log(store.getState())
 )
 
-ReactDOM.render(
-  <Provider store={store}>
-    <EmbeddedApp
-          apiKey={apiKey}
-          shopOrigin={shopOrigin}
-          forceRedirect
-          debug
-        > 
-      <AdminPanelContainer />
-    </EmbeddedApp>
-  </Provider>,
-  document.getElementById('root')
-);
+if (process.env.NODE_ENV !== 'development') {
+  ReactDOM.render(
+    <Provider store={store}>
+      <EmbeddedApp
+            apiKey={apiKey}
+            shopOrigin={shopOrigin}
+            forceRedirect
+            debug
+          >
+          <AdminPanelContainer  />
+      </EmbeddedApp>
+    </Provider>,
+    document.getElementById('root')
+  );
+} else {
+  ReactDOM.render(
+    <Provider store={store}>
+      <AdminPanelContainer  />
+    </Provider>,
+    document.getElementById('root')
+  );
+}

@@ -14,7 +14,11 @@ export default class SelectedProductList extends React.Component {
       attributeTwo: `Options: ${product.options.map((o) => o.name).join(', ')}`,
       attributeThree: `${product.variantCount} variant(s)`,
       actions: [
-        { 
+        {
+          content: 'Make question to create this variant',
+          onClick: () => this.props.proceedToSurveyQuestions(product)
+        },
+        {
           content: 'View',
           onClick: () => this.context.easdk.redirect(`/products/${product.id}`)
         },{
