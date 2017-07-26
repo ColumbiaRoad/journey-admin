@@ -73,7 +73,7 @@ export const saveModel = () => {
       // VALIDATE request here
       return Promise.resolve();
     }
-    const token = getState.jwtToken;
+    const token = getState().jwtToken;
     return createSaveModelRequest(token).then((json) => {
       dispatch(saveSuccess(json));
     }).catch((err) => dispatch(saveFailed(err)));
