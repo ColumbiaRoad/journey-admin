@@ -4,7 +4,8 @@ const initialState = {
   current_step: 'INITIAL',
   questions: [''],
   answers: {},
-  answerCount: 1,
+  answer_count: 1,
+  api_response: {}
 };
 
 const surveyBuilder = (state = initialState, action) => {
@@ -38,7 +39,15 @@ const surveyBuilder = (state = initialState, action) => {
       });
     case 'INCREMENT_ANSWER_COUNT':
       return Object.assign({}, state, {
-        answerCount: state.answerCount + 1
+        answer_count: state.answer_count + 1
+      });
+    case 'SAVE_SUCCESS':
+      return Object.assign({}, state, {
+        api_response: action.json
+      });
+    case 'SAVE_FAILED':
+      return Object.assign({}, state, {
+        api_response: action.error
       });
     default:
       return state;
