@@ -32,7 +32,50 @@ export const addNewAnswer = () => {
   }
 }
 
+const saveSuccess = (json) => {
+    return {
+      type: 'SAVE_SUCCESS',
+      json
+    }
+}
+
+const saveFailed = (error) => {
+    return {
+      type: 'SAVE_FAILED',
+      error
+    }
+}
+
+export function createSaveModelRequest(token) {
+  //body: JSON.stringify(requestData),
+  return fetch(`https://ja-api-development.herokuapp.com/api/v1/products`,
+    {
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return response.json().then(body => {
+        throw new Error(body.message);
+      });
+    });
+}
+
 export const saveModel = () => {
-  //DO SOME async here!
-  console.log('SAVING MODEL');
+  return function (dispatch, getState) {
+    if (false) {
+      // VALIDATE request here
+      return Promise.resolve();
+    }
+    const token = getState.jwtToken;
+    return createSaveModelRequest(token).then((json) => {
+      dispatch(saveSuccess(json));
+    }).catch((err) => dispatch(saveFailed(err)));
+  };
 }

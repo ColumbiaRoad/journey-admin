@@ -56,6 +56,7 @@ export default class AnswerQuestions extends React.Component {
           primary
           onClick={() => this.props.saveModel()}
         > Save answers and variants</Button>
+      <p>{JSON.stringify(this.props.api_response)}</p>
       </FormLayout>
     );
   }
