@@ -38,20 +38,19 @@ export default class AnswerMapping extends React.Component {
     const selectedValue = this.props.mapping.mapping.length > 0
       ? { value: this.props.mapping.mapping }
       : {};
+    const header = this.props.id + 1 + '. Answer';
     return (
-      <FormLayout.Group>
+      <FormLayout.Group condensed title={header}>
         <TextField 
-          label='Answer'
           onChange={this.handleTextFieldChange}
           value={this.props.mapping.answer}
           spellCheck
           placeholder={'Ice cream'}
         />
         <Select
-          label='Mapping'
           options={this.props.choices}
           onChange={this.handleSelectChange}
-          placeholder='Select'
+          placeholder='Mapping'
           {...selectedValue}
         />
         <Button
