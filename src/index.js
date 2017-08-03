@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 import URLSearchParams from 'url-search-params';
 import ReduxThunk from 'redux-thunk';
 
-import setJwtToken from './actions/jwtToken';
+import { setJwtToken } from './actions/jwtToken';
 import { setSelectedProducts } from './actions/selectedProducts';
 
 dotenv.config();

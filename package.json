@@ -18,6 +18,8 @@
     "url-search-params": "^0.8.0"
   },
   "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "jsonwebtoken": "^7.4.1",
     "react-scripts": "0.9.5"
   },
   "scripts": {
