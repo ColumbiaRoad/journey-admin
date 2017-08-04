@@ -11,3 +11,13 @@ export const removeSelectedProduct = (id) => {
     id: id
   }
 }
+
+export const addProductQuestion = (questionItem) => {
+  return {
+    type: 'ADD_PRODUCT_QUESTION',
+    option: questionItem.option,
+    question: questionItem.question,
+    answerMapping: questionItem.answerMapping,
+    productId: questionItem.productId
+  }
+}

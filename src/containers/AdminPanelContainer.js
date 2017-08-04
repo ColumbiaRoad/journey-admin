@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import AdminPanel from '../components/AdminPanel';
-import toggleResourcePickerState from '../actions/resourcePickerOpen';
-import { setSelectedProducts } from '../actions/selectedProducts';
+import { toggleResourcePickerState } from '../actions/resourcePickerOpen';
+import { setSelectedProducts, removeSelectedProduct } from '../actions/selectedProducts';
 
 const mapStateToProps = (state) => {
   return {
     open: state.resourcePickerOpen,
     token: state.jwtToken,
     selection: state.selectedProducts.length > 0,
-    survey_state: state.surveyBuilder.current_step,
+    products: state.selectedProducts
   };
 };
 
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSelect: (products) => {
       dispatch(setSelectedProducts(products));
+    },
+    onDelete: (id) => {
+      dispatch(removeSelectedProduct(id));
     }
   };
 }

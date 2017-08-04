@@ -1,10 +1,53 @@
+const question = (state = {}, action) => {
+  switch(action.type) {
+    case 'ADD_PRODUCT_QUESTION':
+      return {
+        option: action.option,
+        question: action.question,
+        answerMapping: action.answerMapping
+      }
+    default:
+      return state;
+  }
+};
+
 const selectedProducts = (state = [], action) => {
   switch(action.type) {
     case 'SET_SELECTED_PRODUCTS':
-      return action.selectedProducts;
+      return action.selectedProducts.map((prod) => {
+        return {
+          product: prod,
+          questions: prod.options.map((option) => {
+            // Upon creation create a question item for each option,
+            // this makes adding new questions/answers more straightforward
+            return {
+              option: option.name,
+              question: '',
+              answerMapping: []
+            }
+          })
+        };
+      });
+    case 'ADD_PRODUCT_QUESTION':
+      return state.map((item) => {
+        if(item.product.id === action.productId) {
+          return {
+            ...item,
+            questions: item.questions.map((q) => {
+              if(q.option === action.option) {
+                return question(undefined, action);
+              } else {
+                return q;
+              }
+            })
+          };
+        } else {
+          return item;
+        }
+      });
     case 'REMOVE_SELECTED_PRODUCT':
-      return state.filter((p) => {
-        return p.id !== action.id;
+      return state.filter((prod) => {
+        return prod.product.id !== action.id;
       });
     default:
       return state;

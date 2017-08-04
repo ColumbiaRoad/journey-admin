@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import SelectedProductList from '../components/SelectedProductList';
-import { removeSelectedProduct } from '../actions/selectedProducts';
+import SelectedProduct from '../components/SelectedProduct';
+import { removeSelectedProduct} from '../actions/selectedProducts';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    products: state.selectedProducts,
+    item: ownProps.item,
   };
 }
 
@@ -19,6 +19,6 @@ const mapDispatchToProps = (dispatch) => {
 const SelectedProductListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectedProductList);
+)(SelectedProduct);
 
 export default SelectedProductListContainer;
