@@ -28,7 +28,7 @@ const selectedProducts = (state = [], action) => {
       });
     case 'ADD_PRODUCT_QUESTION':
       return state.map((item) => {
-        if(item.product.id === action.id) {
+        if(item.product.id === action.productId) {
           return {
             ...item,
             questions: item.questions.map((q) => {

@@ -18,6 +18,6 @@ export const addProductQuestion = (questionItem) => {
     option: questionItem.option,
     question: questionItem.question,
     answerMapping: questionItem.answerMapping,
-    id: questionItem.productId
+    productId: questionItem.productId
   }
 }

@@ -5,32 +5,21 @@ export default class AnswerMapping extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      answer: '',
-      mapping: ''
-    };
-
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   handleTextFieldChange(answer) {
-    this.setState({
-      answer
-    });
     this.props.onChange({
-      ...this.state,
-      answer
+      answer: answer,
+      mapping: this.props.mapping.mapping
     }, this.props.id);
   }
 
   handleSelectChange(mapping) {
-    this.setState({
-      mapping
-    });
     this.props.onChange({
-      ...this.state,
-      mapping
+      answer: this.props.mapping.answer,
+      mapping: mapping
     }, this.props.id);
   }
 

@@ -8,65 +8,60 @@ export default class SelectedProductOption extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      question: '',
-      answerMapping: []
-    };
-
     this.handleAddAnswer = this.handleAddAnswer.bind(this);
-    this.onNewQuestion = this.onNewQuestion.bind(this);
     this.onRemoveAnswer = this.onRemoveAnswer.bind(this);
     this.onUpdateAnswerMapping = this.onUpdateAnswerMapping.bind(this);
+    this.onUpdateQuestion = this.onUpdateQuestion.bind(this);
   }
 
   handleAddAnswer() {
-    this.setState({
+    this.props.onSave({
+      option: this.props.option.name,
+      question: this.props.questionItem.question,
       answerMapping: [
-        ...this.state.answerMapping,
+        ...this.props.questionItem.answerMapping,
         {
           answer: '',
           mapping: ''
         }
-      ]
+      ],
+      productId: this.props.productId
     });
   }
 
   onUpdateAnswerMapping(updatedMapping, index) {
-    const newAnswerMapping = this.state.answerMapping.map((mapping, i) => {
+    const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping, i) => {
         return index === i ? updatedMapping : mapping;
     });
-    this.setState({
-      answerMapping: newAnswerMapping
-    })
+
     this.props.onSave({
       option: this.props.option.name,
-      question: this.state.question,
+      question: this.props.questionItem.question,
       answerMapping: newAnswerMapping,
       productId: this.props.productId
     });
   }
 
   onRemoveAnswer(index) {
-    const newAnswerMapping = this.state.answerMapping.filter((mapping, i) => {
+    const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping, i) => {
         return index !== i;
-    });
-    this.setState({
-      answerMapping: newAnswerMapping
     });
 
     this.props.onSave({
       option: this.props.option.name,
-      question: this.state.question,
+      question: this.props.questionItem.question,
       answerMapping: newAnswerMapping,
       productId: this.props.productId
     });
   }
 
-  onNewQuestion(question) {
-    this.setState({
-      question: question
+  onUpdateQuestion(question) {
+    this.props.onSave({
+      option: this.props.option.name,
+      question: question,
+      answerMapping: this.props.questionItem.answerMapping,
+      productId: this.props.productId
     });
-    console.log(question);
   }
 
   render() {
@@ -76,9 +71,10 @@ export default class SelectedProductOption extends React.Component {
         key={this.props.option.position}>
           <Question
             topic={this.props.option.name}
-            onSubmit={this.onNewQuestion} />
+            onChange={this.onUpdateQuestion}
+            question={this.props.questionItem.question} />
           {
-            this.state.answerMapping.map((mapping, index) => {
+            this.props.questionItem.answerMapping.map((mapping, index) => {
               return <AnswerMapping
                         mapping={mapping}
                         choices={this.props.option.values}
