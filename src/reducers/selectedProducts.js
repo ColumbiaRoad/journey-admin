@@ -18,6 +18,8 @@ const selectedProducts = (state = [], action) => {
         return {
           product: prod,
           questions: prod.options.map((option) => {
+            // Upon creation create a question item for each option,
+            // this makes adding new questions/answers more straightforward
             return {
               option: option.name,
               question: '',

@@ -27,13 +27,14 @@ export default class SelectedProductList extends React.Component {
         primaryFooterAction={
           {
             content: 'Save',
-            onAction: () => alert('hi')
+            onAction: () => alert('TODO: save to backend')
           }
         }
         >
         {
           this.props.item.product.options.map((option) => {
             return (
+              // Rather pass data as props than making redux store more complicated
               <SelectedProductOptionContainer
                 option={option}
                 productId={this.props.item.product.id}

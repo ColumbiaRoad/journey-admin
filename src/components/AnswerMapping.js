@@ -9,6 +9,7 @@ export default class AnswerMapping extends React.Component {
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
+  // Report change to parent component rather than dispatching event
   handleTextFieldChange(answer) {
     this.props.onChange({
       answer: answer,
@@ -16,6 +17,7 @@ export default class AnswerMapping extends React.Component {
     }, this.props.id);
   }
 
+  // Report change to parent component rather than dispatching event
   handleSelectChange(mapping) {
     this.props.onChange({
       answer: this.props.mapping.answer,
@@ -24,6 +26,7 @@ export default class AnswerMapping extends React.Component {
   }
 
   render() {
+    // Add value property if mapping exists
     const selectedValue = this.props.mapping.mapping.length > 0
       ? { value: this.props.mapping.mapping }
       : {};

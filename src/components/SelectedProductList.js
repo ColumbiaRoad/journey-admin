@@ -1,20 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card } from '@shopify/polaris';
 import SelectedProductContainer from '../containers/SelectedProductContainer';
 
-export default class SelectedProductList extends React.Component {
-  static contextTypes = {
-    easdk: PropTypes.object,
-  };
-
-  render() {
+const SelectedProductList = (props) => {
     return (
       <Card
         sectioned
         title={'Selected Products'}>
         { 
-          this.props.products.map((item) => {
+          props.products.map((item) => {
+            // Rather pass item as prop than making redux store more complicated
             return <SelectedProductContainer
               item={item}
               key={item.product.id} />
@@ -22,5 +17,6 @@ export default class SelectedProductList extends React.Component {
         }
       </Card>
     );
-  }
 }
+
+export default SelectedProductList;

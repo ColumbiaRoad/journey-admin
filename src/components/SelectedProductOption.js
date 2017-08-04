@@ -8,13 +8,14 @@ export default class SelectedProductOption extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleAddAnswer = this.handleAddAnswer.bind(this);
+    this.onAddAnswer = this.onAddAnswer.bind(this);
     this.onRemoveAnswer = this.onRemoveAnswer.bind(this);
     this.onUpdateAnswerMapping = this.onUpdateAnswerMapping.bind(this);
     this.onUpdateQuestion = this.onUpdateQuestion.bind(this);
   }
 
-  handleAddAnswer() {
+  onAddAnswer() {
+    // Update complete item to keep redux store simple
     this.props.onSave({
       option: this.props.option.name,
       question: this.props.questionItem.question,
@@ -30,10 +31,12 @@ export default class SelectedProductOption extends React.Component {
   }
 
   onUpdateAnswerMapping(updatedMapping, index) {
+    // Update changed mapping in global list
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping, i) => {
         return index === i ? updatedMapping : mapping;
     });
 
+    // Update complete item to keep redux store simple
     this.props.onSave({
       option: this.props.option.name,
       question: this.props.questionItem.question,
@@ -43,10 +46,12 @@ export default class SelectedProductOption extends React.Component {
   }
 
   onRemoveAnswer(index) {
+    // Update global list
     const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping, i) => {
         return index !== i;
     });
-
+    
+    // Update complete item to keep redux store simple
     this.props.onSave({
       option: this.props.option.name,
       question: this.props.questionItem.question,
@@ -56,6 +61,7 @@ export default class SelectedProductOption extends React.Component {
   }
 
   onUpdateQuestion(question) {
+    // Update complete item to keep redux store simple
     this.props.onSave({
       option: this.props.option.name,
       question: question,
@@ -70,11 +76,13 @@ export default class SelectedProductOption extends React.Component {
         title={this.props.option.name}
         key={this.props.option.position}>
           <Question
+            // Rather pass data as props than making redux store more complicated
             topic={this.props.option.name}
             onChange={this.onUpdateQuestion}
             question={this.props.questionItem.question} />
           {
             this.props.questionItem.answerMapping.map((mapping, index) => {
+              // Rather pass data as props than making redux store more complicated
               return <AnswerMapping
                         mapping={mapping}
                         choices={this.props.option.values}
@@ -86,7 +94,7 @@ export default class SelectedProductOption extends React.Component {
           }
           <FormLayout.Group>
             <Button
-              onClick={this.handleAddAnswer}>
+              onClick={this.onAddAnswer}>
               Add answer
             </Button>
           </FormLayout.Group>
