@@ -1,7 +1,7 @@
 import deepFreeze from 'deep-freeze';
 import resourcePickerOpen from './resourcePickerOpen';
 import { toggleResourcePickerState } from '../actions/resourcePickerOpen';
-import { setSelectedProducts } from '../actions/selectedProducts';
+import { setSelectedProducts, addSelectedProducts } from '../actions/selectedProducts';
 
 describe('resourcePickerOpen', () => {
   it('toggle resource picker state', () => {
@@ -19,6 +19,18 @@ describe('resourcePickerOpen', () => {
   it('react to product selection', () => {
     const beforeState = true;
     const action = setSelectedProducts([]);
+    const afterState = false;
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(resourcePickerOpen(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('react to adding new products', () => {
+    const beforeState = true;
+    const action = addSelectedProducts([]);
     const afterState = false;
 
     deepFreeze(beforeState);

@@ -4,6 +4,7 @@ const resourcePickerOpen = (state = false, action) => {
       return !state;
     // Always close the resource picker after products have been selected
     case 'SET_SELECTED_PRODUCTS':
+    case 'ADD_SELECTED_PRODUCTS':
       return false;
     default:
       return state;
