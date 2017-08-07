@@ -1,36 +1,34 @@
 import React from 'react';
-import { Page, Card, Button, Layout } from '@shopify/polaris';
+import { Page, Layout, Banner } from '@shopify/polaris';
 
 import SelectedProductListContainer from '../containers/SelectedProductListContainer'
-import ProductPicker from './ProductPicker';
+import ProductPickerContainer from '../containers/ProductPickerContainer';
 
-export default class AdminPanel extends React.Component {
-  render() {
-    return (
-      <Page>
-        <Layout>
-          <Layout.Section>
-            <Card sectioned>
-              <Button
-                onClick={() => {
-                  this.props.onToggle('set');
-                }}
-              >
-                Select Products
-              </Button>
-            </Card>
-          { (process.env.NODE_ENV !== 'development') &&
-              <ProductPicker
-                open={this.props.open}
-                onSelectAction={this.props.onSelectAction}
-                onSelect={this.props.onSelect}
-                onToggle={this.props.onToggle} /> }
-          </Layout.Section>
-          <Layout.Section>
-            <SelectedProductListContainer />
-          </Layout.Section>
-        </Layout>
-      </Page>
-    );
-  }
+const AdminPanel = (props) => {
+  return (
+    <Page>
+      <Layout>
+        <Layout.Section>
+        { !props.selection &&
+            <Banner
+              title="No products selected"
+              action={{
+                content: 'Select products',
+                onAction: () => { props.onToggle('set') }
+              }}
+            >
+              <p>Select products to create questions and map possible answers to product option values.</p>
+            </Banner> }
+        { (process.env.NODE_ENV !== 'development') &&
+            <ProductPickerContainer /> }
+        </Layout.Section>
+        <Layout.Section>
+          { props.selection &&
+              <SelectedProductListContainer /> }
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
 }
+
+export default AdminPanel;
