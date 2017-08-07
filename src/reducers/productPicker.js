@@ -3,7 +3,7 @@ const productPicker = (state = {}, action) => {
     case 'TOGGLE_PRODUCT_PICKER_STATE':
       return {
         open: !state.open,
-        onSelection: action.onSelection ? action.onSelection : state.onSelection
+        onSelectAction: action.onSelectAction ? action.onSelectAction : state.onSelectAction
       };
     // Always close the resource picker after products have been selected
     case 'SET_SELECTED_PRODUCTS':

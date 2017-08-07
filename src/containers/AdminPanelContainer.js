@@ -6,7 +6,7 @@ import { setSelectedProducts, removeSelectedProduct, addSelectedProducts } from 
 const mapStateToProps = (state) => {
   return {
     open: state.productPicker.open,
-    onSelection: state.productPicker.onSelection,
+    onSelectAction: state.productPicker.onSelectAction,
     token: state.jwtToken,
     selection: state.selectedProducts.length > 0,
     products: state.selectedProducts
@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggle: (action) => {
       dispatch(toggleProductPicker(action));
     },
-    onSelect: (products) => {
-      if(state.productPicker.onSelection === 'set') {
+    onSelect: (products, onSelectAction) => {
+      if(onSelectAction === 'set') {
         dispatch(setSelectedProducts(products));
       } else {
         dispatch(addSelectedProducts(products))

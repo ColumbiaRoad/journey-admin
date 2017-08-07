@@ -7,7 +7,7 @@ describe('resourcePickerOpen', () => {
   it('toggle resource picker state', () => {
     const beforeState = {
       open: false,
-      onSelection: 'add'
+      onSelectAction: 'add'
     };
     const action = toggleProductPicker();
     const afterState = {
@@ -25,7 +25,7 @@ describe('resourcePickerOpen', () => {
   it('react to product selection', () => {
     const beforeState = {
       open: true,
-      onSelection: 'set'
+      onSelectAction: 'set'
     };
     const action = setSelectedProducts([]);
     const afterState = {
@@ -43,7 +43,7 @@ describe('resourcePickerOpen', () => {
   it('react to adding new products', () => {
     const beforeState = {
       open: true,
-      onSelection: 'add'
+      onSelectAction: 'add'
     };
     const action = addSelectedProducts([]);
     const afterState = {
@@ -61,7 +61,7 @@ describe('resourcePickerOpen', () => {
   it('handle unknown action', () => {
     const beforeState = {
       open: false,
-      onSelection: 'add'
+      onSelectAction: 'add'
     };
     const action = {
       foo: 'bar'

@@ -1,6 +1,6 @@
-export const toggleProductPicker = (onSelection) => {
+export const toggleProductPicker = (onSelectAction) => {
   return {
     type: 'TOGGLE_PRODUCT_PICKER_STATE',
-    onSelection: onSelection
+    onSelectAction: onSelectAction
   };
 };
