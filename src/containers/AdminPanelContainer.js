@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onToggle: (action) => {
-      dispatch(toggleResourcePickerState(action));
+      dispatch(toggleProductPicker(action));
     },
     onSelect: (products) => {
       if(state.productPicker.onSelection === 'set') {
