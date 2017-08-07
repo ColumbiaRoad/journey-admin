@@ -13,22 +13,22 @@ export default class AnswerMapping extends React.Component {
   handleTextFieldChange(answer) {
     this.props.onChange({
       answer: answer,
-      mapping: this.props.mapping.mapping
+      value: this.props.mapping.value
     }, this.props.id);
   }
 
   // Report change to parent component rather than dispatching event
-  handleSelectChange(mapping) {
+  handleSelectChange(value) {
     this.props.onChange({
       answer: this.props.mapping.answer,
-      mapping: mapping
+      value: value
     }, this.props.id);
   }
 
   render() {
     // Add value property if mapping exists
-    const selectedValue = this.props.mapping.mapping.length > 0
-      ? { value: this.props.mapping.mapping }
+    const selectedValue = this.props.mapping.value.length > 0
+      ? { value: this.props.mapping.value }
       : {};
     const header = this.props.id + 1 + '. Answer';
     return (

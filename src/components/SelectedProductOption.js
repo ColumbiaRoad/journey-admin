@@ -23,7 +23,7 @@ export default class SelectedProductOption extends React.Component {
         ...this.props.questionItem.answerMapping,
         {
           answer: '',
-          mapping: ''
+          value: ''
         }
       ],
       productId: this.props.productId

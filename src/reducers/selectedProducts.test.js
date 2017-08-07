@@ -132,7 +132,7 @@ describe('selectedProducts', () => {
       answerMapping: [
         {
           answer: 'Amazing',
-          mapping: products[0].options[0].values[0]
+          value: products[0].options[0].values[0]
         }
       ],
       productId: products[0].id
