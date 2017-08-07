@@ -22,6 +22,7 @@ export default class AdminPanel extends React.Component {
           { (process.env.NODE_ENV !== 'development') &&
               <ProductPicker
                 open={this.props.open}
+                onSelectAction={this.props.onSelectAction}
                 onSelect={this.props.onSelect}
                 onToggle={this.props.onToggle} /> }
           </Layout.Section>

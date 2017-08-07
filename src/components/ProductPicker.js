@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResourcePicker } from '@shopify/polaris/embedded';
 
-const ProductPicker = ({ open, onSelect, onToggle }) => {
+const ProductPicker = ({ open, onSelectAction, onSelect, onToggle }) => {
   return (
     <ResourcePicker
       products
@@ -18,7 +18,7 @@ const ProductPicker = ({ open, onSelect, onToggle }) => {
             variants: p.variants,
           };
         });
-        onSelect(selectedProducts);
+        onSelect(selectedProducts, onSelectAction);
       }}
       onCancel={() => onToggle()}
     />
