@@ -1,6 +1,11 @@
 import deepFreeze from 'deep-freeze';
 import selectedProducts from './selectedProducts';
-import { setSelectedProducts, removeSelectedProduct, addProductQuestion } from '../actions/selectedProducts';
+import { 
+  setSelectedProducts,
+  removeSelectedProduct,
+  addProductQuestion,
+  addSelectedProducts,
+  removeAllSelectedProducts } from '../actions/selectedProducts';
 
 const products = [{
     id: 11152897108,
@@ -28,7 +33,7 @@ const products = [{
         "41",
         "42"
       ]
-    },{
+    }, {
       id: 13737062484,
       name: "Color",
       position: 2,
@@ -41,7 +46,23 @@ const products = [{
     }],
     tags: "Best Seller",
     title: "Test Product"
-}]
+  }, {
+    id: 11346562004,
+    options: [{
+      id: 13979357588,
+      name: "Flavour",
+      position: 1,
+      product_id: 11346562004,
+      values: [
+        "sweet",
+        "sour",
+        "bitter",
+        "salty"
+      ]
+    }],
+    tags: "Sale",
+    title: "Third Product"
+  }]
 
 describe('selectedProducts', () => {
   it('set selected products', () => {
@@ -71,6 +92,30 @@ describe('selectedProducts', () => {
     const beforeState = selectedProducts([], setSelectedProducts(products));
     const action = removeSelectedProduct(products[0].id);
     const afterState = selectedProducts([], setSelectedProducts(products.slice(1)));
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('add selected products', () => {
+    const beforeState = selectedProducts([], setSelectedProducts(products.slice(0, 1)));
+    const action = addSelectedProducts(products.slice(1));
+    const afterState = selectedProducts([], setSelectedProducts(products));
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('remove all selected products', () => {
+    const beforeState = selectedProducts([], setSelectedProducts(products));
+    const action = removeAllSelectedProducts();
+    const afterState = [];
 
     deepFreeze(beforeState);
     deepFreeze(action);

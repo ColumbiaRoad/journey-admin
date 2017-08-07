@@ -12,6 +12,19 @@ export const removeSelectedProduct = (id) => {
   }
 }
 
+export const addSelectedProducts = (selectedProducts) => {
+  return {
+    type: 'ADD_SELECTED_PRODUCTS',
+    selectedProducts: selectedProducts
+  }
+}
+
+export const removeAllSelectedProducts = () => {
+  return {
+    type: 'REMOVE_ALL_SELECTED_PRODUCTS'
+  }
+}
+
 export const addProductQuestion = (questionItem) => {
   return {
     type: 'ADD_PRODUCT_QUESTION',

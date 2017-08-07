@@ -1,3 +1,5 @@
+import { setSelectedProducts } from '../actions/selectedProducts';
+
 const question = (state = {}, action) => {
   switch(action.type) {
     case 'ADD_PRODUCT_QUESTION':
@@ -28,6 +30,12 @@ const selectedProducts = (state = [], action) => {
           })
         };
       });
+    case 'ADD_SELECTED_PRODUCTS':
+      // Merge old and new arrays using ES6 spread operator
+      return [
+        ...state,
+        ...selectedProducts([], setSelectedProducts(action.selectedProducts))
+      ];
     case 'ADD_PRODUCT_QUESTION':
       return state.map((item) => {
         if(item.product.id === action.productId) {
@@ -49,6 +57,8 @@ const selectedProducts = (state = [], action) => {
       return state.filter((prod) => {
         return prod.product.id !== action.id;
       });
+    case 'REMOVE_ALL_SELECTED_PRODUCTS':
+      return [];
     default:
       return state;
   }

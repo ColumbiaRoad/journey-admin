@@ -1,10 +1,10 @@
-import resourcePickerOpen from './resourcePickerOpen';
+import productPicker from './productPicker';
 import jwtToken from './jwtToken';
 import selectedProducts from './selectedProducts';
 import { combineReducers } from 'redux';
 
 const adminPanel = combineReducers({
-  resourcePickerOpen,
+  productPicker,
   jwtToken,
   selectedProducts,
 });

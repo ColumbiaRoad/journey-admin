@@ -1,59 +1,34 @@
 import React from 'react';
-import { Page, Card, Button, Layout } from '@shopify/polaris';
-import { ResourcePicker } from '@shopify/polaris/embedded';
+import { Page, Layout, Banner } from '@shopify/polaris';
 
 import SelectedProductListContainer from '../containers/SelectedProductListContainer'
+import ProductPickerContainer from '../containers/ProductPickerContainer';
 
-const ProductPicker = ({ open, onSelect, onToggle }) => {
+const AdminPanel = (props) => {
   return (
-    <ResourcePicker
-      products
-      allowMultiple
-      open={open}
-      onSelection={(resources) => {
-        const selectedProducts = resources.products.map((p) => {
-          return {
-            id: p.id,
-            title: p.title,
-            options: p.options,
-            variantCount: p.variants.length,
-            tags: p.tags,
-            variants: p.variants,
-          };
-        });
-        onSelect(selectedProducts);
-      }}
-      onCancel={() => onToggle()}
-    />
+    <Page>
+      <Layout>
+        <Layout.Section>
+        { !props.selection &&
+            <Banner
+              title="No products selected"
+              action={{
+                content: 'Select products',
+                onAction: () => { props.onToggle('set') }
+              }}
+            >
+              <p>Select products to create questions and map possible answers to product option values.</p>
+            </Banner> }
+        { (process.env.NODE_ENV !== 'development') &&
+            <ProductPickerContainer /> }
+        </Layout.Section>
+        <Layout.Section>
+          { props.selection &&
+              <SelectedProductListContainer /> }
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 }
 
-export default class AdminPanel extends React.Component {
-  render() {
-    return (
-      <Page>
-        <Layout>
-          <Layout.Section>
-            <Card sectioned>
-              <Button
-                onClick={() => {
-                  this.props.onToggle();
-                }}
-              >
-                Select Products
-              </Button>
-            </Card>
-          { (process.env.NODE_ENV !== 'development') &&
-              <ProductPicker
-                open={this.props.open}
-                onSelect={this.props.onSelect}
-                onToggle={this.props.onToggle} /> }
-          </Layout.Section>
-          <Layout.Section>
-            <SelectedProductListContainer />
-          </Layout.Section>
-        </Layout>
-      </Page>
-    );
-  }
-}
+export default AdminPanel;

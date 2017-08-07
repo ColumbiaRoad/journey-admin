@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import SelectedProductList from '../components/SelectedProductList';
-import { removeSelectedProduct } from '../actions/selectedProducts';
+import { removeAllSelectedProducts } from '../actions/selectedProducts';
+import { toggleProductPicker } from '../actions/productPicker';
 
 const mapStateToProps = (state) => {
   return {
@@ -10,8 +11,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDelete: (id) => {
-      dispatch(removeSelectedProduct(id));
+    onDelete: () => {
+      dispatch(removeAllSelectedProducts());
+    },
+    onAdd: () => {
+      dispatch(toggleProductPicker('add'));
     }
   }
 }

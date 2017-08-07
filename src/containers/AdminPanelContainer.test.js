@@ -11,6 +11,9 @@ const testStore = createStore(
   applyMiddleware(ReduxThunk)
 );
 
+// Change NODE_ENV to trigger full render
+process.env.NODE_ENV = 'testing';
+
 describe('AdminPanelContainer', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');

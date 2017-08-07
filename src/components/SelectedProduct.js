@@ -24,13 +24,10 @@ export default class SelectedProductList extends React.Component {
             onAction: () => this.context.easdk.redirect(`/products/${this.props.item.product.id}`)
           }
         ]}
-        primaryFooterAction={
-          {
+        secondaryFooterAction={{
             content: 'Save',
             onAction: () => alert('TODO: save to backend')
-          }
-        }
-        >
+        }} >
         {
           this.props.item.product.options.map((option) => {
             return (
