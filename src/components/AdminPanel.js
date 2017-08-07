@@ -13,7 +13,7 @@ export default class AdminPanel extends React.Component {
             <Card sectioned>
               <Button
                 onClick={() => {
-                  this.props.onToggle();
+                  this.props.onToggle('set');
                 }}
               >
                 Select Products

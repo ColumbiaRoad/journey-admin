@@ -8,7 +8,7 @@ describe('adminPanel', () => {
       foo: 'bar'
     };
     const afterState = {
-      resourcePickerOpen: false,
+      productPicker: {},
       jwtToken: '',
       selectedProducts: []
     }
