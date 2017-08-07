@@ -57,6 +57,8 @@ const selectedProducts = (state = [], action) => {
       return state.filter((prod) => {
         return prod.product.id !== action.id;
       });
+    case 'REMOVE_ALL_SELECTED_PRODUCTS':
+      return [];
     default:
       return state;
   }

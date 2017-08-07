@@ -4,7 +4,8 @@ import {
   setSelectedProducts,
   removeSelectedProduct,
   addProductQuestion,
-  addSelectedProducts } from '../actions/selectedProducts';
+  addSelectedProducts,
+  removeAllSelectedProducts } from '../actions/selectedProducts';
 
 const products = [{
     id: 11152897108,
@@ -103,6 +104,18 @@ describe('selectedProducts', () => {
     const beforeState = selectedProducts([], setSelectedProducts(products.slice(0, 1)));
     const action = addSelectedProducts(products.slice(1));
     const afterState = selectedProducts([], setSelectedProducts(products));
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('remove all selected products', () => {
+    const beforeState = selectedProducts([], setSelectedProducts(products));
+    const action = removeAllSelectedProducts();
+    const afterState = [];
 
     deepFreeze(beforeState);
     deepFreeze(action);
