@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@shopify/polaris';
 import SelectedProductOptionContainer from '../containers/SelectedProductOptionContainer';
+import { parseProductAnswerMappings } from '../utils/answerMappingParser';
 
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
@@ -26,7 +27,7 @@ export default class SelectedProductList extends React.Component {
         ]}
         secondaryFooterAction={{
             content: 'Save',
-            onAction: () => alert('TODO: save to backend')
+            onAction: () => alert(JSON.stringify(parseProductAnswerMappings(this.props.item)))
         }} >
         {
           this.props.item.product.options.map((option) => {
