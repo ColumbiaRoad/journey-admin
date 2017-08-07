@@ -1,54 +1,75 @@
 import deepFreeze from 'deep-freeze';
-import resourcePickerOpen from './resourcePickerOpen';
-import { toggleResourcePickerState } from '../actions/resourcePickerOpen';
+import productPicker from './productPicker';
+import { toggleProductPicker } from '../actions/productPicker';
 import { setSelectedProducts, addSelectedProducts } from '../actions/selectedProducts';
 
 describe('resourcePickerOpen', () => {
   it('toggle resource picker state', () => {
-    const beforeState = false;
-    const action = toggleResourcePickerState();
-    const afterState = !beforeState
+    const beforeState = {
+      open: false,
+      onSelection: 'add'
+    };
+    const action = toggleProductPicker();
+    const afterState = {
+      ...beforeState,
+      open: !beforeState.open
+    };
 
     deepFreeze(beforeState);
     deepFreeze(action);
-    expect(resourcePickerOpen(
+    expect(productPicker(
       beforeState, action
     )).toEqual(afterState);
   });
 
   it('react to product selection', () => {
-    const beforeState = true;
+    const beforeState = {
+      open: true,
+      onSelection: 'set'
+    };
     const action = setSelectedProducts([]);
-    const afterState = false;
+    const afterState = {
+      ...beforeState,
+      open: !beforeState.open
+    };
 
     deepFreeze(beforeState);
     deepFreeze(action);
-    expect(resourcePickerOpen(
+    expect(productPicker(
       beforeState, action
     )).toEqual(afterState);
   });
 
   it('react to adding new products', () => {
-    const beforeState = true;
+    const beforeState = {
+      open: true,
+      onSelection: 'add'
+    };
     const action = addSelectedProducts([]);
-    const afterState = false;
+    const afterState = {
+      ...beforeState,
+      open: !beforeState.open
+    }
 
     deepFreeze(beforeState);
     deepFreeze(action);
-    expect(resourcePickerOpen(
+    expect(productPicker(
       beforeState, action
     )).toEqual(afterState);
   });
 
   it('handle unknown action', () => {
-    const beforeState = true;
+    const beforeState = {
+      open: false,
+      onSelection: 'add'
+    };
     const action = {
       foo: 'bar'
     };
     
     deepFreeze(beforeState);
     deepFreeze(action);
-    expect(resourcePickerOpen(
+    expect(productPicker(
       beforeState, action
     )).toEqual(beforeState);
   });
