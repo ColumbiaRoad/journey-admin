@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import AdminPanel from '../components/AdminPanel';
-import { toggleResourcePickerState } from '../actions/resourcePickerOpen';
-import { setSelectedProducts, removeSelectedProduct } from '../actions/selectedProducts';
+import { toggleProductPicker } from '../actions/productPicker';
+import { setSelectedProducts, removeSelectedProduct, addSelectedProducts } from '../actions/selectedProducts';
 
 const mapStateToProps = (state) => {
   return {
-    open: state.resourcePickerOpen,
+    open: state.productPicker.open,
+    onSelection: state.productPicker.onSelection,
     token: state.jwtToken,
     selection: state.selectedProducts.length > 0,
     products: state.selectedProducts
@@ -14,11 +15,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onToggle: () => {
-      dispatch(toggleResourcePickerState());
+    onToggle: (action) => {
+      dispatch(toggleResourcePickerState(action));
     },
     onSelect: (products) => {
-      dispatch(setSelectedProducts(products));
+      if(state.productPicker.onSelection === 'set') {
+        dispatch(setSelectedProducts(products));
+      } else {
+        dispatch(addSelectedProducts(products))
+      }
     },
     onDelete: (id) => {
       dispatch(removeSelectedProduct(id));
