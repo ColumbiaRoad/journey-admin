@@ -20,7 +20,6 @@ export default class SelectedProductList extends React.Component {
 
   onSave() {
     const parsingState = parseProductAnswerMappings(this.props.item);
-    console.log(parsingState);
     this.setState({
       parsingState: parsingState
     });
