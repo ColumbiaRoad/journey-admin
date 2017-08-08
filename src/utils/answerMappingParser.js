@@ -18,9 +18,9 @@ export function parseProductAnswerMappings(selectedProduct) {
 }
 
 function parseAnswerMapping(questionItem, allowedValues) {
-  let conclusion = { valid: true, questionError: false, errors: [] };
+  let conclusion = { valid: true, questionError: 0, mappingErrors: [] };
   if(questionItem.question.length === 0) {
-    conclusion.questionError = 1000;
+    conclusion = addQuestionError(conclusion, 1000);
   }
   const parsedMapping = {};
 
@@ -40,12 +40,20 @@ function parseAnswerMapping(questionItem, allowedValues) {
   return conclusion;
 }
 
+function addQuestionError(conclusion, errorCode) {
+  return {
+    ...conclusion,
+    valid: false,
+    questionError: errorCode
+  };
+}
+
 function addMappingError(conclusion, error) {
   return {
     ...conclusion,
     valid: false,
-    errors: [
-      ...conclusion.errors,
+    mappingErrors: [
+      ...conclusion.mappingErrors,
       error
     ]
   };
