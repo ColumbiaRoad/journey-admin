@@ -1,9 +1,9 @@
 export const PARSING_ERRORS = {
-  1000: 'empty question',
-  1001: 'empty answer',
-  1002: 'empty value',
-  1003: 'answer maps to multiple values',
-  1004: 'invalid value'
+  1000: 'Question field cannot be empty',
+  1001: 'Answer field cannot be empty',
+  1002: 'Value selection cannot be empty',
+  1003: 'Same answer cannot map to multiple values',
+  1004: 'Invalid value'
 };
 
 export function parseProductAnswerMappings(selectedProduct) {
