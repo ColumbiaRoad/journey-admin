@@ -38,11 +38,13 @@ export default class AnswerMapping extends React.Component {
           value={this.props.mapping.answer}
           spellCheck
           placeholder={'Ice cream'}
+          error={this.props.error}
         />
         <Select
           options={this.props.choices}
           onChange={this.handleSelectChange}
           placeholder='Mapping'
+          error={this.props.error}
           {...selectedValue}
         />
         <Button

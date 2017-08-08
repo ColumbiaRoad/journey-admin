@@ -9,6 +9,23 @@ export default class SelectedProductList extends React.Component {
     easdk: PropTypes.object,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      parsingState: {}
+    };
+    this.onSave = this.onSave.bind(this);
+  }
+
+  onSave() {
+    const parsingState = parseProductAnswerMappings(this.props.item);
+    console.log(parsingState);
+    this.setState({
+      parsingState: parsingState
+    });
+  }
+
   render() {
     return (
       <Card
@@ -27,17 +44,21 @@ export default class SelectedProductList extends React.Component {
         ]}
         secondaryFooterAction={{
             content: 'Save',
-            onAction: () => alert(JSON.stringify(parseProductAnswerMappings(this.props.item)))
+            onAction: this.onSave
         }} >
         {
           this.props.item.product.options.map((option) => {
+            const errors = this.state.parsingState[option.name] && !this.state.parsingState[option.name].valid
+              ? this.state.parsingState[option.name]
+              : false;
             return (
               // Rather pass data as props than making redux store more complicated
               <SelectedProductOptionContainer
                 option={option}
                 productId={this.props.item.product.id}
-                key={option.position} />
-            )
+                key={option.position}
+                errors={errors} />
+            );
           })
         }
       </Card>

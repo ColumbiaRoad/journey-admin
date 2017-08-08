@@ -71,6 +71,10 @@ export default class SelectedProductOption extends React.Component {
   }
 
   render() {
+    const questionError = this.props.errors && this.props.errors.questionError > 0;
+    const mappingErrors = this.props.errors 
+      ? this.props.errors.mappingErrors.map(e => e.index)
+      : false;
     return (
       <Card.Section
         title={this.props.option.name}
@@ -79,16 +83,19 @@ export default class SelectedProductOption extends React.Component {
             // Rather pass data as props than making redux store more complicated
             topic={this.props.option.name}
             onChange={this.onUpdateQuestion}
-            question={this.props.questionItem.question} />
+            question={this.props.questionItem.question}
+            error={questionError} />
           {
             this.props.questionItem.answerMapping.map((mapping, index) => {
               // Rather pass data as props than making redux store more complicated
+              const error = mappingErrors ? mappingErrors.includes(index) : false;
               return <AnswerMapping
                         mapping={mapping}
                         choices={this.props.option.values}
                         onRemove={this.onRemoveAnswer}
                         onChange={this.onUpdateAnswerMapping}
                         id={index}
+                        error={error}
                         key={index} />
             })
           }

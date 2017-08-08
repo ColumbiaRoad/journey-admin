@@ -9,10 +9,11 @@ const mapStateToProps = (state, ownProps) => {
     .find(e => e.product.id === ownProps.productId)
     .questions
     .find(q => q.option === ownProps.option.name);
-
+  
   return {
     option: ownProps.option,
     productId: ownProps.productId,
+    errors: ownProps.errors,
     questionItem: questionItem
   }
 }
