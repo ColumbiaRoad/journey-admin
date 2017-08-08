@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from '@shopify/polaris';
+import { Card, Banner, List } from '@shopify/polaris';
+import { uniq } from 'lodash'
 import SelectedProductOptionContainer from '../containers/SelectedProductOptionContainer';
-import { parseProductAnswerMappings } from '../utils/answerMappingParser';
-
+import { parseProductAnswerMappings, PARSING_ERRORS } from '../utils/answerMappingParser';
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
     easdk: PropTypes.object,
@@ -25,7 +25,26 @@ export default class SelectedProductList extends React.Component {
     });
   }
 
+  getErrorList() {
+      // Flatmap all mapping errors as well as question errors and remove duplicates
+      return uniq([].concat(...Object.keys(this.state.parsingState).map((k) => {
+        if(!this.state.parsingState[k].valid){
+          const questionError = this.state.parsingState[k].questionError > 0
+            ? [this.state.parsingState[k].questionError]
+            : [];
+          return [
+            ...questionError,
+            ...this.state.parsingState[k].mappingErrors.map((e) => {
+              return e.errorCode;
+            })
+          ];
+        }
+        return [];
+      })));
+  }
+
   render() {
+    const errorList = this.getErrorList();
     return (
       <Card
         title={this.props.item.product.title}
@@ -45,6 +64,21 @@ export default class SelectedProductList extends React.Component {
             content: 'Save',
             onAction: this.onSave
         }} >
+        { errorList.length > 0 &&
+          <Banner
+            title="Product question(s) could not be saved"
+            status="critical"
+          >
+            Please resolve the following issues:
+            <List type="bullet">
+            { 
+              errorList.map((e) => {
+                return <List.Item key={e}>{PARSING_ERRORS[e]}</List.Item>
+              })
+            }
+            </List>
+          </Banner>
+        }
         {
           this.props.item.product.options.map((option) => {
             const errors = this.state.parsingState[option.name] && !this.state.parsingState[option.name].valid
