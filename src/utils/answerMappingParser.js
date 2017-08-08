@@ -24,19 +24,19 @@ function parseAnswerMapping(questionItem, allowedValues) {
   }
   const parsedMapping = {};
 
-  questionItem.answerMapping.forEach((mapping, index) => {
+  for(const mapping of questionItem.answerMapping) {
     if(mapping.answer.length === 0) {
-      conclusion = addMappingError(conclusion, { index, errorCode: 1001 });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1001 });
     } else if (mapping.value.length === 0) {
-      conclusion = addMappingError(conclusion, { index, errorCode: 1002 });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1002 });
     } else if(parsedMapping.hasOwnProperty(mapping.answer)) {
-      conclusion = addMappingError(conclusion, { index, errorCode: 1003, key: mapping.answer });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1003, key: mapping.answer });
     } else if(!allowedValues.includes(mapping.value)) {
-      conclusion = addMappingError(conclusion, { index, errorCode: 1004 });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1004 });
     } else {
       parsedMapping[mapping.answer] = mapping.value;
     }
-  });
+  };
   return conclusion;
 }
 

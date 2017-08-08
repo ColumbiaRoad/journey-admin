@@ -28,23 +28,23 @@ const selectedProductValid = {
   },
   questions: [{
       answerMapping: [
-        {answer: "Tight fit", value: "39"},
-        {answer: "Regular fit", value: "40"},
-        {answer: "Loose fit", value: "42"}
+        {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+        {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+        {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
       ],
       option: "Size",
       question: "What fit do you prefer?"
     }, {
       answerMapping: [
-        {answer: "I want to have everybody's attention", value: "yellow"},
-        {answer: "I'd rather blend in", value: "blue"}
+        {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+        {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
       ],
       option: "Color",
       question: "Do you want to be seen or blend in?"
     }, {
       answerMapping: [
-        {answer: "Yes", value: "something"},
-        {answer: "No", value: "something else"}
+        {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+        {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
       ],
       option: "Material",
       question: "Do you spend a lot of time outside?"
@@ -71,23 +71,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Tight fit", value: "39"},
-            {answer: "Regular fit", value: "40"},
-            {answer: "Loose fit", value: "42"}
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
           ],
           option: "Size",
           question: ""
         }, {
           answerMapping: [
-            {answer: "I want to have everybody's attention", value: "yellow"},
-            {answer: "I'd rather blend in", value: "blue"}
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
           ],
           option: "Color",
           question: "Do you want to be seen or blend in?"
         }, {
           answerMapping: [
-            {answer: "Yes", value: "something"},
-            {answer: "No", value: "something else"}
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -110,23 +110,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Tight fit", value: "39"},
-            {answer: "Regular fit", value: "40"},
-            {answer: "Loose fit", value: "42"}
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
           ],
           option: "Size",
           question: "What fit do you prefer?"
         }, {
           answerMapping: [
-            {answer: "I want to have everybody's attention", value: "yellow"},
-            {answer: "", value: "blue"}
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "", value: "blue"}
           ],
           option: "Color",
           question: "Do you want to be seen or blend in?"
         }, {
           answerMapping: [
-            {answer: "Yes", value: "something"},
-            {answer: "No", value: "something else"}
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -135,7 +135,9 @@ describe('answerMappingParser', () => {
     };
     const expectedConclusion = {
       Size: {valid: true, questionError: 0, mappingErrors: []},
-      Color: {valid: false, questionError: 0, mappingErrors: [{ index: 1, errorCode: 1001}]},
+      Color: {valid: false, questionError: 0, mappingErrors: [
+        { id: "b3xe5369j63fnzel", errorCode: 1001}
+      ]},
       Material: {valid: true, questionError: 0, mappingErrors: []}
     };
 
@@ -149,23 +151,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Tight fit", value: "39"},
-            {answer: "Regular fit", value: "40"},
-            {answer: "Loose fit", value: ""}
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: ""}
           ],
           option: "Size",
           question: "What fit do you prefer?"
         }, {
           answerMapping: [
-            {answer: "I want to have everybody's attention", value: "yellow"},
-            {answer: "I'd rather blend in", value: "blue"}
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
           ],
           option: "Color",
           question: "Do you want to be seen or blend in?"
         }, {
           answerMapping: [
-            {answer: "Yes", value: "something"},
-            {answer: "No", value: "something else"}
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -173,7 +175,9 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: false, questionError: 0, mappingErrors: [{ index: 2, errorCode: 1002 }]},
+      Size: {valid: false, questionError: 0, mappingErrors: [
+        { id: "b3xe5369j63fnzej", errorCode: 1002 }
+      ]},
       Color: {valid: true, questionError: 0, mappingErrors: []},
       Material: {valid: true, questionError: 0, mappingErrors: []} 
     };
@@ -188,23 +192,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Loose fit", value: "39"},
-            {answer: "Regular fit", value: "40"},
-            {answer: "Loose fit", value: "42"}
+            {id: "b3xe5369j63fnzeh", answer: "Loose fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
           ],
           option: "Size",
           question: "What fit do you prefer?"
         }, {
           answerMapping: [
-            {answer: "I want to have everybody's attention", value: "yellow"},
-            {answer: "I'd rather blend in", value: "blue"}
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
           ],
           option: "Color",
           question: "Do you want to be seen or blend in?"
         }, {
           answerMapping: [
-            {answer: "Yes", value: "something"},
-            {answer: "No", value: "something else"}
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -213,7 +217,7 @@ describe('answerMappingParser', () => {
     };
     const expectedConclusion = {
       Size: {valid: false, questionError: 0, mappingErrors: [
-        { index: 2, errorCode: 1003, key: 'Loose fit' }
+        { id: "b3xe5369j63fnzej", errorCode: 1003, key: 'Loose fit' }
       ]},
       Color: {valid: true, questionError: 0, mappingErrors: []},
       Material: {valid: true, questionError: 0, mappingErrors: []} 
@@ -229,23 +233,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Tight fit", value: "39"},
-            {answer: "Regular fit", value: "40"},
-            {answer: "Loose fit", value: "42"}
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
           ],
           option: "Size",
           question: "What fit do you prefer?"
         }, {
           answerMapping: [
-            {answer: "I want to have everybody's attention", value: "yellow"},
-            {answer: "I'd rather blend in", value: "blue"}
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
           ],
           option: "Color",
           question: "Do you want to be seen or blend in?"
         }, {
           answerMapping: [
-            {answer: "Yes", value: "something"},
-            {answer: "No", value: "foo"}
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "foo"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -255,7 +259,9 @@ describe('answerMappingParser', () => {
     const expectedConclusion = {
       Size: {valid: true, questionError: 0, mappingErrors: []},
       Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: false, questionError: 0, mappingErrors: [{ index: 1, errorCode: 1004 }]}
+      Material: {valid: false, questionError: 0, mappingErrors: [
+        { id: "b3xe5369j63fnzen", errorCode: 1004 }
+      ]}
     };
 
     deepFreeze(selectedProduct);
@@ -268,23 +274,23 @@ describe('answerMappingParser', () => {
       ...selectedProductValid,
       questions: [{
           answerMapping: [
-            {answer: "Loose fit", value: "39"},
-            {answer: "Regular fit", value: ""},
-            {answer: "Loose fit", value: "42"}
+            {id: "b3xe5369j63fnzeh", answer: "Loose fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: ""},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
           ],
           option: "Size",
           question: "What fit do you prefer?"
         }, {
           answerMapping: [
-            {answer: "", value: "yellow"},
-            {answer: "I'd rather blend in", value: ""}
+            {id: "b3xe5369j63fnzek", answer: "", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: ""}
           ],
           option: "Color",
           question: ""
         }, {
           answerMapping: [
-            {answer: "", value: ""},
-            {answer: "No", value: "foo"}
+            {id: "b3xe5369j63fnzem", answer: "", value: ""},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "foo"}
           ],
           option: "Material",
           question: "Do you spend a lot of time outside?"
@@ -293,16 +299,16 @@ describe('answerMappingParser', () => {
     };
     const expectedConclusion = {
       Size: {valid: false, questionError: 0, mappingErrors: [
-        { index: 1, errorCode: 1002 },
-        { index: 2, errorCode: 1003, key: 'Loose fit' }
+        { id: "b3xe5369j63fnzei", errorCode: 1002 },
+        { id: "b3xe5369j63fnzej", errorCode: 1003, key: 'Loose fit' }
       ]},
       Color: {valid: false, questionError: 1000, mappingErrors: [
-        { index: 0, errorCode: 1001 },
-        { index: 1, errorCode: 1002 }
+        { id: "b3xe5369j63fnzek", errorCode: 1001 },
+        { id: "b3xe5369j63fnzel", errorCode: 1002 }
       ]},
       Material: {valid: false, questionError: 0, mappingErrors: [
-        { index: 0, errorCode: 1001 },
-        { index: 1, errorCode: 1004 }
+        { id: "b3xe5369j63fnzem", errorCode: 1001 },
+        { id: "b3xe5369j63fnzen", errorCode: 1004 }
       ]}
     };
 

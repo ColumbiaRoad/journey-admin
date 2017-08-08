@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Button, FormLayout } from '@shopify/polaris';
+import uniqid from 'uniqid';
 import Question from './Question';
 import AnswerMapping from './AnswerMapping';
 
@@ -9,12 +10,13 @@ export default class SelectedProductOption extends React.Component {
     super(props);
 
     this.onAddAnswer = this.onAddAnswer.bind(this);
-    this.onRemoveAnswer = this.onRemoveAnswer.bind(this);
+    this.onRemoveAnswerMapping = this.onRemoveAnswerMapping.bind(this);
     this.onUpdateAnswerMapping = this.onUpdateAnswerMapping.bind(this);
     this.onUpdateQuestion = this.onUpdateQuestion.bind(this);
   }
 
   onAddAnswer() {
+    const id = uniqid();
     // Update complete item to keep redux store simple
     this.props.onSave({
       option: this.props.option.name,
@@ -22,6 +24,7 @@ export default class SelectedProductOption extends React.Component {
       answerMapping: [
         ...this.props.questionItem.answerMapping,
         {
+          id: id,
           answer: '',
           value: ''
         }
@@ -30,10 +33,10 @@ export default class SelectedProductOption extends React.Component {
     });
   }
 
-  onUpdateAnswerMapping(updatedMapping, index) {
+  onUpdateAnswerMapping(updatedMapping) {
     // Update changed mapping in global list
-    const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping, i) => {
-        return index === i ? updatedMapping : mapping;
+    const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
+        return updatedMapping.id === mapping.id ? updatedMapping : mapping;
     });
 
     // Update complete item to keep redux store simple
@@ -45,10 +48,10 @@ export default class SelectedProductOption extends React.Component {
     });
   }
 
-  onRemoveAnswer(index) {
+  onRemoveAnswerMapping(removeId) {
     // Update global list
-    const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping, i) => {
-        return index !== i;
+    const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping) => {
+        return removeId !== mapping.id;
     });
     
     // Update complete item to keep redux store simple
@@ -73,7 +76,7 @@ export default class SelectedProductOption extends React.Component {
   render() {
     const questionError = this.props.errors && this.props.errors.questionError > 0;
     const mappingErrors = this.props.errors 
-      ? this.props.errors.mappingErrors.map(e => e.index)
+      ? this.props.errors.mappingErrors.map(e => e.id)
       : false;
     return (
       <Card.Section
@@ -88,15 +91,16 @@ export default class SelectedProductOption extends React.Component {
           {
             this.props.questionItem.answerMapping.map((mapping, index) => {
               // Rather pass data as props than making redux store more complicated
-              const error = mappingErrors ? mappingErrors.includes(index) : false;
+              const error = mappingErrors ? mappingErrors.includes(mapping.id) : false;
               return <AnswerMapping
                         mapping={mapping}
                         choices={this.props.option.values}
-                        onRemove={this.onRemoveAnswer}
+                        onRemove={this.onRemoveAnswerMapping}
                         onChange={this.onUpdateAnswerMapping}
-                        id={index}
+                        id={mapping.id}
+                        index={index}
                         error={error}
-                        key={index} />
+                        key={mapping.id} />
             })
           }
           <FormLayout.Group>
