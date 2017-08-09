@@ -12,29 +12,26 @@ export default class SelectedProductList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      parsingState: {}
-    };
     this.onSave = this.onSave.bind(this);
   }
 
   onSave() {
-    const parsingState = parseProductAnswerMappings(this.props.item);
-    this.setState({
-      parsingState: parsingState
+    this.props.onUpdateParsingReport({
+      productId: this.props.item.product.id,
+      parsingReport: parseProductAnswerMappings(this.props.item)
     });
   }
 
   getErrorList() {
     // Flatmap all mapping errors as well as question errors and remove duplicates
-    return uniq([].concat(...Object.keys(this.state.parsingState).map((k) => {
-      if(!this.state.parsingState[k].valid){
-        const questionErrors = this.state.parsingState[k].questionErrors.length > 0
-          ? this.state.parsingState[k].questionErrors
+    return uniq([].concat(...Object.keys(this.props.item.parsingReport).map((k) => {
+      if(!this.props.item.parsingReport[k].valid){
+        const questionErrors = this.props.item.parsingReport[k].questionErrors.length > 0
+          ? this.props.item.parsingReport[k].questionErrors
           : [];
         return [
           ...questionErrors,
-          ...this.state.parsingState[k].mappingErrors.map((e) => {
+          ...this.props.item.parsingReport[k].mappingErrors.map((e) => {
             return e.errorCode;
           })
         ];
@@ -81,8 +78,8 @@ export default class SelectedProductList extends React.Component {
         }
         {
           this.props.item.product.options.map((option) => {
-            const errors = this.state.parsingState[option.name] && !this.state.parsingState[option.name].valid
-              ? this.state.parsingState[option.name]
+            const errors = this.props.item.parsingReport[option.name] && !this.props.item.parsingReport[option.name].valid
+              ? this.props.item.parsingReport[option.name]
               : false;
             return (
               // Rather pass data as props than making redux store more complicated
