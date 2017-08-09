@@ -19,7 +19,7 @@ export function parseProductAnswerMappings(selectedProduct) {
 }
 
 function parseAnswerMapping(questionItem, allowedValues) {
-  // Group errors together because occur at the same time
+  // Group errors together because they might occur at the same time
   let report = { valid: true, questionErrors: [], mappingErrors: [] };
   if(questionItem.question.length === 0 || questionItem.answerMapping.length === 0) {
     if(questionItem.question.length === 0) {
@@ -32,7 +32,7 @@ function parseAnswerMapping(questionItem, allowedValues) {
   const parsedMapping = {};
 
   for(const mapping of questionItem.answerMapping) {
-    // Group errors together because occur at the same time
+    // Group errors together because they might occur at the same time
     if(mapping.answer.length === 0 || mapping.value.length === 0) {
       if(mapping.answer.length === 0) {
         report = addMappingError(report, { id: mapping.id, errorCode: 1000 });
