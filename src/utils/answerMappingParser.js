@@ -3,7 +3,7 @@ export const PARSING_ERRORS = {
   2001: 'Questions require at least one possible answer',
   1000: 'Answer field cannot be empty',
   1001: 'Value selection cannot be empty',
-  1002: 'Same answer cannot map to multiple values',
+  1002: 'Answers must be unique',
   1003: 'Invalid value'
 };
 
