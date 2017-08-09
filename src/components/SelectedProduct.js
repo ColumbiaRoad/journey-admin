@@ -26,21 +26,21 @@ export default class SelectedProductList extends React.Component {
   }
 
   getErrorList() {
-      // Flatmap all mapping errors as well as question errors and remove duplicates
-      return uniq([].concat(...Object.keys(this.state.parsingState).map((k) => {
-        if(!this.state.parsingState[k].valid){
-          const questionError = this.state.parsingState[k].questionError > 0
-            ? [this.state.parsingState[k].questionError]
-            : [];
-          return [
-            ...questionError,
-            ...this.state.parsingState[k].mappingErrors.map((e) => {
-              return e.errorCode;
-            })
-          ];
-        }
-        return [];
-      })));
+    // Flatmap all mapping errors as well as question errors and remove duplicates
+    return uniq([].concat(...Object.keys(this.state.parsingState).map((k) => {
+      if(!this.state.parsingState[k].valid){
+        const questionErrors = this.state.parsingState[k].questionErrors.length > 0
+          ? this.state.parsingState[k].questionErrors
+          : [];
+        return [
+          ...questionErrors,
+          ...this.state.parsingState[k].mappingErrors.map((e) => {
+            return e.errorCode;
+          })
+        ];
+      }
+      return [];
+    })));
   }
 
   render() {
@@ -69,7 +69,7 @@ export default class SelectedProductList extends React.Component {
             title="Product question(s) could not be saved"
             status="critical"
           >
-            Please resolve the following issues:
+            <p>Please resolve the following issues:<br /><br /></p>
             <List type="bullet">
             { 
               errorList.map((e) => {

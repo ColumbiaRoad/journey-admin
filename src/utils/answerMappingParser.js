@@ -1,9 +1,10 @@
 export const PARSING_ERRORS = {
-  1000: 'Question field cannot be empty',
-  1001: 'Answer field cannot be empty',
-  1002: 'Value selection cannot be empty',
-  1003: 'Same answer cannot map to multiple values',
-  1004: 'Invalid value'
+  2000: 'Question field cannot be empty',
+  2001: 'Questions require at least one possible answer',
+  1000: 'Answer field cannot be empty',
+  1001: 'Value selection cannot be empty',
+  1002: 'Same answer cannot map to multiple values',
+  1003: 'Invalid value'
 };
 
 export function parseProductAnswerMappings(selectedProduct) {
@@ -18,21 +19,31 @@ export function parseProductAnswerMappings(selectedProduct) {
 }
 
 function parseAnswerMapping(questionItem, allowedValues) {
-  let conclusion = { valid: true, questionError: 0, mappingErrors: [] };
-  if(questionItem.question.length === 0) {
-    conclusion = addQuestionError(conclusion, 1000);
+  // Group errors together because occur at the same time
+  let conclusion = { valid: true, questionErrors: [], mappingErrors: [] };
+  if(questionItem.question.length === 0 || questionItem.answerMapping.length === 0) {
+    if(questionItem.question.length === 0) {
+      conclusion = addQuestionError(conclusion, 2000);
+    }
+    if(questionItem.answerMapping.length === 0) {
+      conclusion = addQuestionError(conclusion, 2001);
+    }
   }
   const parsedMapping = {};
 
   for(const mapping of questionItem.answerMapping) {
-    if(mapping.answer.length === 0) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1001 });
-    } else if (mapping.value.length === 0) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1002 });
+    // Group errors together because occur at the same time
+    if(mapping.answer.length === 0 || mapping.value.length === 0) {
+      if(mapping.answer.length === 0) {
+        conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1000 });
+      }
+      if (mapping.value.length === 0) {
+        conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1001 });
+      }
     } else if(parsedMapping.hasOwnProperty(mapping.answer)) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1003, key: mapping.answer });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1002, key: mapping.answer });
     } else if(!allowedValues.includes(mapping.value)) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1004 });
+      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1003 });
     } else {
       parsedMapping[mapping.answer] = mapping.value;
     }
@@ -44,7 +55,10 @@ function addQuestionError(conclusion, errorCode) {
   return {
     ...conclusion,
     valid: false,
-    questionError: errorCode
+    questionErrors: [
+      ...conclusion.questionErrors,
+      errorCode
+    ]
   };
 }
 

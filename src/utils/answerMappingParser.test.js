@@ -56,9 +56,9 @@ describe('answerMappingParser', () => {
   it('parse valid mapping', () => {
     const selectedProduct = {...selectedProductValid};
     const expectedConclusion = {
-      Size: {valid: true, questionError: 0, mappingErrors: []},
-      Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: true, questionError: 0, mappingErrors: []}
+      Size: {valid: true, questionErrors: [], mappingErrors: []},
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: true, questionErrors: [], mappingErrors: []}
     };
 
     deepFreeze(selectedProduct);
@@ -95,9 +95,80 @@ describe('answerMappingParser', () => {
       ]
     };
     const expectedConclusion = {
-      Size: {valid: false, questionError: 1000, mappingErrors: []},
-      Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: true, questionError: 0, mappingErrors: []}
+      Size: {valid: false, questionErrors: [2000], mappingErrors: []},
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: true, questionErrors: [], mappingErrors: []}
+    };
+
+    deepFreeze(selectedProduct);
+    expect(parseProductAnswerMappings(selectedProduct))
+      .toEqual(expectedConclusion);
+  });
+
+  it('detect empty answer mapping', () => {
+    const selectedProduct = {
+      ...selectedProductValid,
+      questions: [{
+          answerMapping: [
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
+          ],
+          option: "Size",
+          question: "What fit do you prefer?"
+        }, {
+          answerMapping: [
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
+          ],
+          option: "Color",
+          question: "Do you want to be seen or blend in?"
+        }, {
+          answerMapping: [],
+          option: "Material",
+          question: "Do you spend a lot of time outside?"
+        }
+      ]
+    };
+    const expectedConclusion = {
+      Size: {valid: true, questionErrors: [], mappingErrors: []},
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: false, questionErrors: [2001], mappingErrors: []}
+    };
+
+    deepFreeze(selectedProduct);
+    expect(parseProductAnswerMappings(selectedProduct))
+      .toEqual(expectedConclusion);
+  });
+
+  it('detect multiple question errors', () => {
+    const selectedProduct = {
+      ...selectedProductValid,
+      questions: [{
+          answerMapping: [],
+          option: "Size",
+          question: ""
+        }, {
+          answerMapping: [
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
+          ],
+          option: "Color",
+          question: "Do you want to be seen or blend in?"
+        }, {
+          answerMapping: [
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
+          ],
+          option: "Material",
+          question: "Do you spend a lot of time outside?"
+        }
+      ]
+    };
+    const expectedConclusion = {
+      Size: {valid: false, questionErrors: [2000, 2001], mappingErrors: []},
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: true, questionErrors: [], mappingErrors: []}
     };
 
     deepFreeze(selectedProduct);
@@ -134,11 +205,11 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: true, questionError: 0, mappingErrors: []},
-      Color: {valid: false, questionError: 0, mappingErrors: [
-        { id: "b3xe5369j63fnzel", errorCode: 1001}
+      Size: {valid: true, questionErrors: [], mappingErrors: []},
+      Color: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzel", errorCode: 1000}
       ]},
-      Material: {valid: true, questionError: 0, mappingErrors: []}
+      Material: {valid: true, questionErrors: [], mappingErrors: []}
     };
 
     deepFreeze(selectedProduct);
@@ -175,11 +246,11 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: false, questionError: 0, mappingErrors: [
-        { id: "b3xe5369j63fnzej", errorCode: 1002 }
+      Size: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzej", errorCode: 1001 }
       ]},
-      Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: true, questionError: 0, mappingErrors: []} 
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: true, questionErrors: [], mappingErrors: []} 
     };
 
     deepFreeze(selectedProduct);
@@ -216,11 +287,11 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: false, questionError: 0, mappingErrors: [
-        { id: "b3xe5369j63fnzej", errorCode: 1003, key: 'Loose fit' }
+      Size: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzej", errorCode: 1002, key: 'Loose fit' }
       ]},
-      Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: true, questionError: 0, mappingErrors: []} 
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: true, questionErrors: [], mappingErrors: []} 
     };
 
     deepFreeze(selectedProduct);
@@ -257,10 +328,10 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: true, questionError: 0, mappingErrors: []},
-      Color: {valid: true, questionError: 0, mappingErrors: []},
-      Material: {valid: false, questionError: 0, mappingErrors: [
-        { id: "b3xe5369j63fnzen", errorCode: 1004 }
+      Size: {valid: true, questionErrors: [], mappingErrors: []},
+      Color: {valid: true, questionErrors: [], mappingErrors: []},
+      Material: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzen", errorCode: 1003 }
       ]}
     };
 
@@ -298,17 +369,18 @@ describe('answerMappingParser', () => {
       ]  
     };
     const expectedConclusion = {
-      Size: {valid: false, questionError: 0, mappingErrors: [
-        { id: "b3xe5369j63fnzei", errorCode: 1002 },
-        { id: "b3xe5369j63fnzej", errorCode: 1003, key: 'Loose fit' }
+      Size: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzei", errorCode: 1001 },
+        { id: "b3xe5369j63fnzej", errorCode: 1002, key: 'Loose fit' }
       ]},
-      Color: {valid: false, questionError: 1000, mappingErrors: [
-        { id: "b3xe5369j63fnzek", errorCode: 1001 },
-        { id: "b3xe5369j63fnzel", errorCode: 1002 }
+      Color: {valid: false, questionErrors: [2000], mappingErrors: [
+        { id: "b3xe5369j63fnzek", errorCode: 1000 },
+        { id: "b3xe5369j63fnzel", errorCode: 1001 }
       ]},
-      Material: {valid: false, questionError: 0, mappingErrors: [
+      Material: {valid: false, questionErrors: [], mappingErrors: [
+        { id: "b3xe5369j63fnzem", errorCode: 1000 },
         { id: "b3xe5369j63fnzem", errorCode: 1001 },
-        { id: "b3xe5369j63fnzen", errorCode: 1004 }
+        { id: "b3xe5369j63fnzen", errorCode: 1003 }
       ]}
     };
 
