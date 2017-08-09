@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select, TextField, FormLayout, Button } from '@shopify/polaris';
+import { intersection } from 'lodash'
 
 export default class AnswerMapping extends React.Component {
   constructor(props) {
@@ -33,6 +34,9 @@ export default class AnswerMapping extends React.Component {
       ? { value: this.props.mapping.value }
       : {};
     const header = this.props.index + 1 + '. Answer';
+    // Check for errors. Codes can be found in /utils/answerMappingParser
+    const answerError = intersection(this.props.errors, [1000, 1002]).length > 0;
+    const valueError = intersection(this.props.errors, [1001, 1002, 1003]).length > 0;
     return (
       <FormLayout.Group condensed title={header}>
         <TextField 
@@ -40,13 +44,13 @@ export default class AnswerMapping extends React.Component {
           value={this.props.mapping.answer}
           spellCheck
           placeholder={'Ice cream'}
-          error={this.props.error}
+          error={answerError}
         />
         <Select
           options={this.props.choices}
           onChange={this.handleSelectChange}
           placeholder='Mapping'
-          error={this.props.error}
+          error={valueError}
           {...selectedValue}
         />
         <Button
