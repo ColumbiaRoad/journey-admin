@@ -25,9 +25,9 @@ export const removeAllSelectedProducts = () => {
   }
 }
 
-export const addProductQuestion = (questionItem) => {
+export const updateProductQuestion = (questionItem) => {
   return {
-    type: 'ADD_PRODUCT_QUESTION',
+    type: 'UPDATE_PRODUCT_QUESTION',
     option: questionItem.option,
     question: questionItem.question,
     answerMapping: questionItem.answerMapping,

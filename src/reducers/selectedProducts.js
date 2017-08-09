@@ -2,7 +2,7 @@ import { setSelectedProducts } from '../actions/selectedProducts';
 
 const question = (state = {}, action) => {
   switch(action.type) {
-    case 'ADD_PRODUCT_QUESTION':
+    case 'UPDATE_PRODUCT_QUESTION':
       return {
         option: action.option,
         question: action.question,
@@ -36,7 +36,7 @@ const selectedProducts = (state = [], action) => {
         ...state,
         ...selectedProducts([], setSelectedProducts(action.selectedProducts))
       ];
-    case 'ADD_PRODUCT_QUESTION':
+    case 'UPDATE_PRODUCT_QUESTION':
       return state.map((item) => {
         if(item.product.id === action.productId) {
           return {

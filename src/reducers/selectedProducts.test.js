@@ -3,7 +3,7 @@ import selectedProducts from './selectedProducts';
 import { 
   setSelectedProducts,
   removeSelectedProduct,
-  addProductQuestion,
+  updateProductQuestion,
   addSelectedProducts,
   removeAllSelectedProducts } from '../actions/selectedProducts';
 
@@ -124,7 +124,7 @@ describe('selectedProducts', () => {
     )).toEqual(afterState);
   });
 
-  it('add product question', () => {
+  it('update product question', () => {
     const beforeState = selectedProducts([], setSelectedProducts(products));
     const questionItem = {
       option: products[0].options[0].name,
@@ -137,7 +137,7 @@ describe('selectedProducts', () => {
       ],
       productId: products[0].id
     }
-    const action = addProductQuestion(questionItem);
+    const action = updateProductQuestion(questionItem);
     const afterState = selectedProducts([], setSelectedProducts(products)).map((item) => {
       if(item.product.id === questionItem.productId) {
         return {
