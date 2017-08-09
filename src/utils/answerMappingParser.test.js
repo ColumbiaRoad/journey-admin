@@ -258,7 +258,7 @@ describe('answerMappingParser', () => {
       .toEqual(expectedConclusion);
   });
 
-  it('detect answer mapping to multiple values', () => {
+  it('detect duplicate answers', () => {
     const selectedProduct = {
       ...selectedProductValid,
       questions: [{
@@ -288,7 +288,8 @@ describe('answerMappingParser', () => {
     };
     const expectedConclusion = {
       Size: {valid: false, questionErrors: [], mappingErrors: [
-        { id: "b3xe5369j63fnzej", errorCode: 1002, key: 'Loose fit' }
+        { id: "b3xe5369j63fnzeh", errorCode: 1002 },
+        { id: "b3xe5369j63fnzej", errorCode: 1002 }
       ]},
       Color: {valid: true, questionErrors: [], mappingErrors: []},
       Material: {valid: true, questionErrors: [], mappingErrors: []} 
@@ -371,7 +372,8 @@ describe('answerMappingParser', () => {
     const expectedConclusion = {
       Size: {valid: false, questionErrors: [], mappingErrors: [
         { id: "b3xe5369j63fnzei", errorCode: 1001 },
-        { id: "b3xe5369j63fnzej", errorCode: 1002, key: 'Loose fit' }
+        { id: "b3xe5369j63fnzeh", errorCode: 1002 },
+        { id: "b3xe5369j63fnzej", errorCode: 1002 }
       ]},
       Color: {valid: false, questionErrors: [2000], mappingErrors: [
         { id: "b3xe5369j63fnzek", errorCode: 1000 },

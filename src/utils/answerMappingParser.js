@@ -41,11 +41,17 @@ function parseAnswerMapping(questionItem, allowedValues) {
         conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1001 });
       }
     } else if(parsedMapping.hasOwnProperty(mapping.answer)) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1002, key: mapping.answer });
+      // Mark both mappings as erroneous
+      conclusion = addMappingError(addMappingError(conclusion, 
+        { id: parsedMapping[mapping.answer].id, errorCode: 1002}),
+        { id: mapping.id, errorCode: 1002});
     } else if(!allowedValues.includes(mapping.value)) {
       conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1003 });
     } else {
-      parsedMapping[mapping.answer] = mapping.value;
+      parsedMapping[mapping.answer] = {
+        id: mapping.id,
+        value: mapping.value,
+      }
     }
   };
   return conclusion;
