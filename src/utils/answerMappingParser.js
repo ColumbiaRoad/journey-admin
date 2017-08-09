@@ -8,25 +8,25 @@ export const PARSING_ERRORS = {
 };
 
 export function parseProductAnswerMappings(selectedProduct) {
-  const result = {};
+  const parsingReport = {};
   for(const questionItem of selectedProduct.questions) {
     const allowedValues = selectedProduct.product.options
       .find(option => option.name === questionItem.option)
       .values;
-    result[questionItem.option] = parseAnswerMapping(questionItem, allowedValues);
+    parsingReport[questionItem.option] = parseAnswerMapping(questionItem, allowedValues);
   }
-  return result;
+  return parsingReport;
 }
 
 function parseAnswerMapping(questionItem, allowedValues) {
   // Group errors together because occur at the same time
-  let conclusion = { valid: true, questionErrors: [], mappingErrors: [] };
+  let report = { valid: true, questionErrors: [], mappingErrors: [] };
   if(questionItem.question.length === 0 || questionItem.answerMapping.length === 0) {
     if(questionItem.question.length === 0) {
-      conclusion = addQuestionError(conclusion, 2000);
+      report = addQuestionError(report, 2000);
     }
     if(questionItem.answerMapping.length === 0) {
-      conclusion = addQuestionError(conclusion, 2001);
+      report = addQuestionError(report, 2001);
     }
   }
   const parsedMapping = {};
@@ -35,18 +35,18 @@ function parseAnswerMapping(questionItem, allowedValues) {
     // Group errors together because occur at the same time
     if(mapping.answer.length === 0 || mapping.value.length === 0) {
       if(mapping.answer.length === 0) {
-        conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1000 });
+        report = addMappingError(report, { id: mapping.id, errorCode: 1000 });
       }
       if (mapping.value.length === 0) {
-        conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1001 });
+        report = addMappingError(report, { id: mapping.id, errorCode: 1001 });
       }
     } else if(parsedMapping.hasOwnProperty(mapping.answer)) {
       // Mark both mappings as erroneous
-      conclusion = addMappingError(addMappingError(conclusion, 
+      report = addMappingError(addMappingError(report, 
         { id: parsedMapping[mapping.answer].id, errorCode: 1002}),
         { id: mapping.id, errorCode: 1002});
     } else if(!allowedValues.includes(mapping.value)) {
-      conclusion = addMappingError(conclusion, { id: mapping.id, errorCode: 1003 });
+      report = addMappingError(report, { id: mapping.id, errorCode: 1003 });
     } else {
       parsedMapping[mapping.answer] = {
         id: mapping.id,
@@ -54,26 +54,26 @@ function parseAnswerMapping(questionItem, allowedValues) {
       }
     }
   };
-  return conclusion;
+  return report;
 }
 
-function addQuestionError(conclusion, errorCode) {
+function addQuestionError(report, errorCode) {
   return {
-    ...conclusion,
+    ...report,
     valid: false,
     questionErrors: [
-      ...conclusion.questionErrors,
+      ...report.questionErrors,
       errorCode
     ]
   };
 }
 
-function addMappingError(conclusion, error) {
+function addMappingError(report, error) {
   return {
-    ...conclusion,
+    ...report,
     valid: false,
     mappingErrors: [
-      ...conclusion.mappingErrors,
+      ...report.mappingErrors,
       error
     ]
   };
