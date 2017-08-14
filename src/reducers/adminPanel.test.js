@@ -16,7 +16,8 @@ describe('adminPanel', () => {
       selectedProducts: [],
       rootQuestion: {
         question: '',
-        answerMapping: []
+        answerMapping: [],
+        parsingReport: {}
       }
     }
 
