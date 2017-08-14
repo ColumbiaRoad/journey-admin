@@ -10,6 +10,7 @@ const Question = (props) => {
         value={props.question}
         spellCheck
         placeholder={`What's your favourite ${props.topic.toLowerCase()}?`}
+        error={props.error}
       />
     </FormLayout.Group>
   );

@@ -12,7 +12,7 @@ const testStore = createStore(
 );
 
 // Change NODE_ENV to trigger full render
-process.env.NODE_ENV = 'testing';
+process.env.NODE_ENV = 'test';
 
 describe('AdminPanelContainer', () => {
   it('renders without crashing', () => {

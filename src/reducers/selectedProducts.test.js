@@ -3,9 +3,11 @@ import selectedProducts from './selectedProducts';
 import { 
   setSelectedProducts,
   removeSelectedProduct,
-  addProductQuestion,
+  updateProductQuestion,
   addSelectedProducts,
-  removeAllSelectedProducts } from '../actions/selectedProducts';
+  removeAllSelectedProducts,
+  updateParsingReport } from '../actions/selectedProducts';
+import { parseProductAnswerMappings } from '../utils/answerMappingParser';
 
 const products = [{
     id: 11152897108,
@@ -77,7 +79,8 @@ describe('selectedProducts', () => {
             question: '',
             answerMapping: []
           };
-        })
+        }),
+        parsingReport: {}
       }
     });
 
@@ -124,7 +127,7 @@ describe('selectedProducts', () => {
     )).toEqual(afterState);
   });
 
-  it('add product question', () => {
+  it('update product question', () => {
     const beforeState = selectedProducts([], setSelectedProducts(products));
     const questionItem = {
       option: products[0].options[0].name,
@@ -132,12 +135,12 @@ describe('selectedProducts', () => {
       answerMapping: [
         {
           answer: 'Amazing',
-          mapping: products[0].options[0].values[0]
+          value: products[0].options[0].values[0]
         }
       ],
       productId: products[0].id
     }
-    const action = addProductQuestion(questionItem);
+    const action = updateProductQuestion(questionItem);
     const afterState = selectedProducts([], setSelectedProducts(products)).map((item) => {
       if(item.product.id === questionItem.productId) {
         return {
@@ -157,6 +160,54 @@ describe('selectedProducts', () => {
         } else {
           return item;
         }
+    });
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('update parsing report', () => {
+    const questionItem1 = {
+      option: products[1].options[0].name,
+      question: 'How are you doing?',
+      answerMapping: [
+        {
+          answer: 'Amazing',
+          value: ''
+        }
+      ],
+      productId: products[1].id
+    };
+    const questionItem2 = {
+      option: products[1].options[1].name,
+      question: '',
+      answerMapping: [],
+      productId: products[1].id
+    };
+    const beforeState = selectedProducts(
+      selectedProducts(
+      selectedProducts([], setSelectedProducts(products)),
+      updateProductQuestion(questionItem1)),
+      updateProductQuestion(questionItem2) 
+    );
+    const action = updateParsingReport({
+      productId: questionItem1.productId,
+      parsingReport: parseProductAnswerMappings(
+        beforeState.find(item => item.product.id === questionItem1.productId)
+      )
+    });
+    const afterState = beforeState.map((item) => {
+      if(item.product.id === questionItem1.productId) {
+        return {
+          ...item,
+          parsingReport: parseProductAnswerMappings(item)
+        };
+      } else {
+        return item;
+      }
     });
 
     deepFreeze(beforeState);

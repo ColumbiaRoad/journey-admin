@@ -25,12 +25,20 @@ export const removeAllSelectedProducts = () => {
   }
 }
 
-export const addProductQuestion = (questionItem) => {
+export const updateProductQuestion = (questionItem) => {
   return {
-    type: 'ADD_PRODUCT_QUESTION',
+    type: 'UPDATE_PRODUCT_QUESTION',
     option: questionItem.option,
     question: questionItem.question,
     answerMapping: questionItem.answerMapping,
     productId: questionItem.productId
+  }
+}
+
+export const updateParsingReport = (prodcutParsingReport) => {
+  return {
+    type: 'UPDATE_PARSING_REPORT',
+    productId: prodcutParsingReport.productId,
+    parsingReport: prodcutParsingReport.parsingReport
   }
 }
