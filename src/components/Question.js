@@ -5,7 +5,7 @@ const Question = (props) => {
   return (
     <FormLayout.Group>
       <TextField
-        label='Question'
+        label={props.label}
         onChange={props.onChange}
         value={props.question}
         spellCheck
