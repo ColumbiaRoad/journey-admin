@@ -5,3 +5,10 @@ export const updateRootQuestion = (questionItem) => {
     answerMapping: questionItem.answerMapping
   }
 }
+
+export const updateParsingReport = (parsingReport) => {
+  return {
+    type: 'UPDATE_ROOT_QUESTION_PARSING_REPORT',
+    parsingReport: parsingReport
+  }
+}
