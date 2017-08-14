@@ -1,4 +1,5 @@
 import { setSelectedProducts } from '../actions/selectedProducts';
+import { uniqBy } from 'lodash'
 
 const question = (state = {}, action) => {
   switch(action.type) {
@@ -33,10 +34,10 @@ const selectedProducts = (state = [], action) => {
       });
     case 'ADD_SELECTED_PRODUCTS':
       // Merge old and new arrays using ES6 spread operator
-      return [
+      return uniqBy([
         ...state,
         ...selectedProducts([], setSelectedProducts(action.selectedProducts))
-      ];
+      ], selectedProduct => selectedProduct.product.id);
     case 'UPDATE_PRODUCT_QUESTION':
       return state.map((item) => {
         if(item.product.id === action.productId) {
