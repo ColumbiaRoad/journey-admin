@@ -115,6 +115,19 @@ describe('selectedProducts', () => {
     )).toEqual(afterState);
   });
 
+
+  it('add duplicate products', () => {
+    const beforeState = selectedProducts([], setSelectedProducts(products.slice(0, 1)));
+    const action = addSelectedProducts(products);
+    const afterState = selectedProducts([], setSelectedProducts(products));
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
   it('remove all selected products', () => {
     const beforeState = selectedProducts([], setSelectedProducts(products));
     const action = removeAllSelectedProducts();
