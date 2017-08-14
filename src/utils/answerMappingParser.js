@@ -18,7 +18,7 @@ export function parseProductAnswerMappings(selectedProduct) {
   return parsingReport;
 }
 
-function parseAnswerMapping(questionItem, allowedValues) {
+export function parseAnswerMapping(questionItem, allowedValues) {
   // Group errors together because they might occur at the same time
   let report = { valid: true, questionErrors: [], mappingErrors: [] };
   if(questionItem.question.length === 0 || questionItem.answerMapping.length === 0) {
