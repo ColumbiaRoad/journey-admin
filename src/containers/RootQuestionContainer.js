@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import RootQuestion from '../components/RootQuestion';
-import { updateRootQuestion } from '../actions/rootQuestion';
+import { updateRootQuestion, updateParsingReport } from '../actions/rootQuestion';
 
 const mapStateToProps = (state) => {
   return {
@@ -11,8 +11,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSave: (questionItem) => {
+    onUpdate: (questionItem) => {
       dispatch(updateRootQuestion(questionItem));
+    },
+    onSave: (parsingReport) => {
+      dispatch(updateParsingReport(parsingReport));
     }
   };
 }

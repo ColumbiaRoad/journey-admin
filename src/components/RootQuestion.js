@@ -3,6 +3,7 @@ import { Card, FormLayout, Button } from '@shopify/polaris';
 import uniqid from 'uniqid';
 import Question from './Question'
 import AnswerMapping from './AnswerMapping';
+import { parseAnswerMapping } from '../utils/answerMappingParser';
 
 class RootQuestion extends React.Component {
 
@@ -13,10 +14,11 @@ class RootQuestion extends React.Component {
     this.onAddAnswer = this.onAddAnswer.bind(this);
     this.onUpdateAnswerMapping = this.onUpdateAnswerMapping.bind(this);
     this.onRemoveAnswerMapping = this.onRemoveAnswerMapping.bind(this);
+    this.onSave = this.onSave.bind(this);
   }
 
   onUpdateQuestion(question) {
-    this.props.onSave({
+    this.props.onUpdate({
       ...this.props.questionItem,
       question: question
     });
@@ -24,7 +26,7 @@ class RootQuestion extends React.Component {
 
   onAddAnswer() {
     const id = uniqid();
-    this.props.onSave({
+    this.props.onUpdate({
       ...this.props.questionItem,
       answerMapping: [
         ...this.props.questionItem.answerMapping,
@@ -38,7 +40,7 @@ class RootQuestion extends React.Component {
       return updatedMapping.id === mapping.id ? updatedMapping : mapping;
     });
 
-    this.props.onSave({
+    this.props.onUpdate({
       ...this.props.questionItem,
       answerMapping: newAnswerMapping
     });
@@ -49,10 +51,18 @@ class RootQuestion extends React.Component {
       return removeId !== mapping.id;
     });
 
-    this.props.onSave({
+    this.props.onUpdate({
       ...this.props.questionItem,
       answerMapping: newAnswerMapping
     });
+  }
+
+  onSave() {
+    const parsingReport = parseAnswerMapping({
+      question: this.props.questionItem.question,
+      answerMapping: this.props.questionItem.answerMapping
+    });
+    this.props.onSave(parsingReport);
   }
 
   render() {
@@ -61,7 +71,8 @@ class RootQuestion extends React.Component {
         sectioned
         title='Root Question'
         secondaryFooterAction={{
-          content: 'Save'
+          content: 'Save',
+          onAction: this.onSave
         }} >
         <Question
         topic='product'
