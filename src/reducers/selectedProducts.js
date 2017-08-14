@@ -55,7 +55,7 @@ const selectedProducts = (state = [], action) => {
           return item;
         }
       });
-    case 'UPDATE_PARSING_REPORT':
+    case 'UPDATE_PRODUCT_PARSING_REPORT':
       return state.map((item) => {
         if(item.product.id === action.productId) {
           return {

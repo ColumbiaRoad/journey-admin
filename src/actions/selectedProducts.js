@@ -37,7 +37,7 @@ export const updateProductQuestion = (questionItem) => {
 
 export const updateParsingReport = (prodcutParsingReport) => {
   return {
-    type: 'UPDATE_PARSING_REPORT',
+    type: 'UPDATE_PRODUCT_PARSING_REPORT',
     productId: prodcutParsingReport.productId,
     parsingReport: prodcutParsingReport.parsingReport
   }
