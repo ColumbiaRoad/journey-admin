@@ -26,11 +26,8 @@ export default class SelectedProductList extends React.Component {
     // Flatmap all mapping errors as well as question errors and remove duplicates
     return uniq([].concat(...Object.keys(this.props.item.parsingReport).map((k) => {
       if(!this.props.item.parsingReport[k].valid){
-        const questionErrors = this.props.item.parsingReport[k].questionErrors.length > 0
-          ? this.props.item.parsingReport[k].questionErrors
-          : [];
         return [
-          ...questionErrors,
+          ...this.props.item.parsingReport[k].questionErrors,
           ...this.props.item.parsingReport[k].mappingErrors.map((e) => {
             return e.errorCode;
           })
