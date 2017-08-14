@@ -8,9 +8,16 @@ describe('adminPanel', () => {
       foo: 'bar'
     };
     const afterState = {
-      productPicker: {},
+      productPicker: {
+        open: false,
+        onSelectAction: 'set'
+      },
       jwtToken: '',
-      selectedProducts: []
+      selectedProducts: [],
+      rootQuestion: {
+        question: '',
+        answerMapping: []
+      }
     }
 
     deepFreeze(beforeState);
