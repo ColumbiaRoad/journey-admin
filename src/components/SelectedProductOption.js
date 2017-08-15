@@ -84,6 +84,7 @@ export default class SelectedProductOption extends React.Component {
         key={this.props.option.position}>
           <Question
             // Rather pass data as props than making redux store more complicated
+            label='Question'
             topic={this.props.option.name}
             onChange={this.onUpdateQuestion}
             question={this.props.questionItem.question}

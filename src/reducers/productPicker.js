@@ -1,4 +1,9 @@
-const productPicker = (state = {}, action) => {
+const initialState = {
+  open: false,
+  onSelectAction: 'set'
+};
+
+const productPicker = (state = initialState, action) => {
   switch(action.type) {
     case 'TOGGLE_PRODUCT_PICKER_STATE':
       return {
