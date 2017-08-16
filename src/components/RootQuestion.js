@@ -59,7 +59,7 @@ class RootQuestion extends React.Component {
   }
 
   onSave() {
-    const allowedValues = this.props.products.map(product => product.name);
+    const allowedValues = this.props.products.map(product => product.title);
     const parsingReport = parseAnswerMapping({
       question: this.props.questionItem.question,
       answerMapping: this.props.questionItem.answerMapping
