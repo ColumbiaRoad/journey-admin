@@ -11,6 +11,6 @@ export const getStore = () => {
     autoRehydrate()
   )(createStore)(reducer);
   
-  persistStore(store, { storage: localForage }).purge();
+  persistStore(store, { storage: localForage });
   return store;
 }
