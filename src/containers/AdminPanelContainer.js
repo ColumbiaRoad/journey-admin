@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import AdminPanel from '../components/AdminPanel';
 import { toggleProductPicker } from '../actions/productPicker';
+import { updateAllParsingReports } from '../actions/selectedProducts';
 
 const mapStateToProps = (state) => {
   return {
-    selection: state.selectedProducts.length > 0,
+    selectedProducts: state.selectedProducts,
+    rootQuestion: state.rootQuestion
   };
 };
 
@@ -12,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onToggle: (action) => {
       dispatch(toggleProductPicker(action));
+    },
+    onSave: (allParsingReports) => {
+      dispatch(updateAllParsingReports(allParsingReports));
     }
   };
 }
