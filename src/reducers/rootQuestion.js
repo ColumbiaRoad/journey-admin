@@ -2,7 +2,7 @@ const initialState = {
   question: '',
   answerMapping: [],
   parsingReport: {}
-}
+};
 
 const rootQuestion = (state=initialState, action) => {
   switch(action.type) {
@@ -16,7 +16,12 @@ const rootQuestion = (state=initialState, action) => {
       return {
         ...state,
         parsingReport: action.parsingReport
-      }
+      };
+    case 'UPDATE_ALL_PARSING_REPORTS':
+      return {
+        ...state,
+        parsingReport: action.parsingReports.rootQuestion
+      };
     default:
       return state;
   }
