@@ -61,10 +61,17 @@ const selectedProducts = (state = [], action) => {
           return {
             ...item,
             parsingReport: action.parsingReport
-          }
+          };
         } else {
           return item;
         }
+      });
+    case 'UPDATE_ALL_PARSING_REPORTS':
+      return state.map((item) => {
+        return {
+          ...item,
+          parsingReport: action.parsingReports[item.product.id]
+        };
       });
     case 'REMOVE_SELECTED_PRODUCT':
       return state.filter((prod) => {

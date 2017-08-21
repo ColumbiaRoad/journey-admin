@@ -6,8 +6,9 @@ import {
   updateProductQuestion,
   addSelectedProducts,
   removeAllSelectedProducts,
-  updateParsingReport } from '../actions/selectedProducts';
-import { parseProductAnswerMappings } from '../utils/answerMappingParser';
+  updateParsingReport,
+  updateAllParsingReports } from '../actions/selectedProducts';
+import { parseProductAnswerMappings, parseProductSelectionAnswerMappings } from '../utils/answerMappingParser';
 
 const products = [{
     id: 11152897108,
@@ -220,6 +221,142 @@ describe('selectedProducts', () => {
         };
       } else {
         return item;
+      }
+    });
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(selectedProducts(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('update all parsing reports', () => {
+    const selection = [{
+        product: {
+          id: 11152897108,
+          options: [{
+              id: 13721029460,
+              name: "Title",
+              position: 1,
+              product_id: 11152897108,
+              values: ["Default Title"]
+          }],
+          tags: "Best Seller",
+          title: "Another Product"
+        },
+        questions: [{
+          answerMapping: [],
+          option: "Title",
+          question: ""
+        }],
+        parsingReport: {}
+      }, {
+        product: {
+          id: 11346562004,
+          options: [{
+            id: 13979357588,
+            name: "Title",
+            position: 1,
+            product_id: 11346562004,
+            values: ["Default Title"]
+          }],
+          tags: "",
+          title: "Third Product"
+        },
+        questions: [{
+          answerMapping: [
+            {id: "j6lutzp8", answer: "", value: ""}
+          ],
+          option: "Title",
+          question: ""
+        }],
+        parsingReport: {}
+      },{
+        product: {
+        id: 11152891412,
+        options: [{
+          id: 13721022036,
+          name: "Size",
+          position: 1,
+          product_id: 11152891412,
+          values: ["39", "40", "41", "42"]
+        },{
+          id: 13737062484,
+          name: "Color",
+          position:2,
+          product_id: 11152891412,
+          values: ["blue", "green", "yellow"]
+        },{
+          id:13737062548,
+          name: "Material",
+          position: 3,
+          product_id: 11152891412,
+          values: ["something", "something else"]
+        }],
+        tags: "Best Seller",
+        title: "Test Product"
+      },
+      questions: [{
+          answerMapping: [
+            {id: "b3xe5369j63fnzeh", answer: "Tight fit", value: "39"},
+            {id: "b3xe5369j63fnzei", answer: "Regular fit", value: "40"},
+            {id: "b3xe5369j63fnzej", answer: "Loose fit", value: "42"}
+          ],
+          option: "Size",
+          question: "What fit do you prefer?"
+        }, {
+          answerMapping: [
+            {id: "b3xe5369j63fnzek", answer: "I want to have everybody's attention", value: "yellow"},
+            {id: "b3xe5369j63fnzel", answer: "I'd rather blend in", value: "blue"}
+          ],
+          option: "Color",
+          question: "Do you want to be seen or blend in?"
+        }, {
+          answerMapping: [
+            {id: "b3xe5369j63fnzem", answer: "Yes", value: "something"},
+            {id: "b3xe5369j63fnzen", answer: "No", value: "something else"}
+          ],
+          option: "Material",
+          question: "Do you spend a lot of time outside?"
+        }
+      ],
+      parsingReport: {}
+    }];
+
+    const beforeState = selection.slice();
+    const parsingReports = parseProductSelectionAnswerMappings(selection)
+    const action = updateAllParsingReports(parsingReports);
+    const afterState = selection.map(item => {
+      switch(item.product.id) {
+        case 11152897108:
+          return {
+            ...item,
+            parsingReport: {
+              Title: {valid: false, questionErrors: [2000, 2001], mappingErrors: []}
+            }
+          };
+        case 11346562004:
+          return {
+            ...item,
+            parsingReport: {
+                Title: {valid: false, questionErrors: [2000], mappingErrors: [
+                  {id: 'j6lutzp8', errorCode: 1000},
+                  {id: 'j6lutzp8', errorCode: 1001}
+                ]}
+            }
+          };
+        case 11152891412:
+          return {
+            ...item,
+            parsingReport: {
+              Size: {valid: true, questionErrors: [], mappingErrors: []},
+              Color: {valid: true, questionErrors: [], mappingErrors: []},
+              Material: {valid: true, questionErrors: [], mappingErrors: []}
+            }
+          };
+        default:
+          return item;
       }
     });
 

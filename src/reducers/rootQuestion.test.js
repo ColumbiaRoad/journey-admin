@@ -2,6 +2,7 @@ import deepFreeze from 'deep-freeze';
 import { updateRootQuestion, updateParsingReport } from '../actions/rootQuestion';
 import rootQuestion from './rootQuestion';
 import { parseAnswerMapping } from '../utils/answerMappingParser';
+import { updateAllParsingReports } from '../actions/selectedProducts';
 
 describe('rootQuestion', () => {
   it('update root question', () => {
@@ -38,7 +39,7 @@ describe('rootQuestion', () => {
       question: 'How are you doing?',
       answerMapping: [
         {
-          id: "b3xe5369j63fnzeh",
+          id: 'b3xe5369j63fnzeh',
           answer: 'Amazing',
           value: 'Test Product'
         }
@@ -54,7 +55,7 @@ describe('rootQuestion', () => {
       question: 'How are you doing?',
       answerMapping: [
         {
-          id: "b3xe5369j63fnzeh",
+          id: 'b3xe5369j63fnzeh',
           answer: 'Amazing',
           value: 'Test Product'
         }
@@ -63,6 +64,47 @@ describe('rootQuestion', () => {
         valid: true,
         questionErrors: [],
         mappingErrors: []
+      }
+    };
+
+    deepFreeze(beforeState);
+    deepFreeze(action);
+    expect(rootQuestion(
+      beforeState, action
+    )).toEqual(afterState);
+  });
+
+  it('react to global parsing report update', () => {
+    const beforeState = {
+      question: 'How are you doing?',
+      answerMapping: [
+        {
+          id: 'b3xe5369j63fnzeh',
+          answer: 'Amazing',
+          value: ''
+        }
+      ],
+      parsingReport: {}
+    };
+    const parsingReports = {};
+    parsingReports.rootQuestion = parseAnswerMapping({
+      question: beforeState.question,
+      answerMapping: beforeState.answerMapping
+    }, ['Test Product', 'Another Product']);
+    const action = updateAllParsingReports(parsingReports);
+    const afterState = {
+      question: 'How are you doing?',
+      answerMapping: [
+        {
+          id: 'b3xe5369j63fnzeh',
+          answer: 'Amazing',
+          value: ''
+        }
+      ],
+      parsingReport: {
+        valid: false,
+        questionErrors: [],
+        mappingErrors: [{id: 'b3xe5369j63fnzeh', errorCode: 1001}]
       }
     };
 

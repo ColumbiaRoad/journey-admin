@@ -35,10 +35,17 @@ export const updateProductQuestion = (questionItem) => {
   }
 }
 
-export const updateParsingReport = (prodcutParsingReport) => {
+export const updateParsingReport = (productParsingReport) => {
   return {
     type: 'UPDATE_PRODUCT_PARSING_REPORT',
-    productId: prodcutParsingReport.productId,
-    parsingReport: prodcutParsingReport.parsingReport
+    productId: productParsingReport.productId,
+    parsingReport: productParsingReport.parsingReport
+  }
+}
+
+export const updateAllParsingReports = (parsingReports) => {
+  return {
+    type: 'UPDATE_ALL_PARSING_REPORTS',
+    parsingReports
   }
 }

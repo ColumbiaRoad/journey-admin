@@ -7,6 +7,14 @@ export const PARSING_ERRORS = {
   1003: 'Invalid value'
 };
 
+export function parseProductSelectionAnswerMappings(selectedProducts) {
+  const parsingReports = {};
+  for(const selectedProduct of selectedProducts) {
+    parsingReports[selectedProduct.product.id] = parseProductAnswerMappings(selectedProduct);
+  }
+  return parsingReports;
+}
+
 export function parseProductAnswerMappings(selectedProduct) {
   const parsingReport = {};
   for(const questionItem of selectedProduct.questions) {

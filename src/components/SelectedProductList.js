@@ -6,6 +6,7 @@ const SelectedProductList = (props) => {
     return (
       <Card
         sectioned
+        subdued
         title={'Selected Products'}
         actions={[
           {
@@ -16,11 +17,7 @@ const SelectedProductList = (props) => {
             content: 'Add Product(s)',
             onAction: props.onAdd
           }
-        ]}
-        primaryFooterAction={{
-            content: 'Save All',
-            onAction: () => alert('TODO: save to backend')
-        }} >
+        ]} >
         { 
           props.products.map((item) => {
             // Rather pass item as prop than making redux store more complicated

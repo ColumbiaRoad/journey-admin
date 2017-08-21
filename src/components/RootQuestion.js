@@ -4,7 +4,7 @@ import uniqid from 'uniqid';
 import { uniq } from 'lodash'
 import Question from './Question'
 import AnswerMapping from './AnswerMapping';
-import { parseAnswerMapping, PARSING_ERRORS } from '../utils/answerMappingParser';
+import { PARSING_ERRORS } from '../utils/answerMappingParser';
 
 class RootQuestion extends React.Component {
 
@@ -15,7 +15,6 @@ class RootQuestion extends React.Component {
     this.onAddAnswer = this.onAddAnswer.bind(this);
     this.onUpdateAnswerMapping = this.onUpdateAnswerMapping.bind(this);
     this.onRemoveAnswerMapping = this.onRemoveAnswerMapping.bind(this);
-    this.onSave = this.onSave.bind(this);
   }
 
   onUpdateQuestion(question) {
@@ -58,15 +57,6 @@ class RootQuestion extends React.Component {
     });
   }
 
-  onSave() {
-    const allowedValues = this.props.products.map(product => product.title);
-    const parsingReport = parseAnswerMapping({
-      question: this.props.questionItem.question,
-      answerMapping: this.props.questionItem.answerMapping
-    }, allowedValues);
-    this.props.onSave(parsingReport);
-  }
-
   getErrorList() {
     // Check if parsingReport has any content
     if(this.props.questionItem.parsingReport.questionErrors) {
@@ -90,11 +80,7 @@ class RootQuestion extends React.Component {
     return (
       <Card
         sectioned
-        title='Root Question'
-        secondaryFooterAction={{
-          content: 'Save',
-          onAction: this.onSave
-        }} >
+        title='Root Question' >
         { errorList.length > 0 &&
           <Banner
             title="Root question could not be saved"
