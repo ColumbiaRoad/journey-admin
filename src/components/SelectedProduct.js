@@ -3,24 +3,11 @@ import PropTypes from 'prop-types';
 import { Card, Banner, List } from '@shopify/polaris';
 import { uniq } from 'lodash'
 import SelectedProductOptionContainer from '../containers/SelectedProductOptionContainer';
-import { parseProductAnswerMappings, PARSING_ERRORS } from '../utils/answerMappingParser';
+import { PARSING_ERRORS } from '../utils/answerMappingParser';
 export default class SelectedProductList extends React.Component {
   static contextTypes = {
     easdk: PropTypes.object,
   };
-
-  constructor(props) {
-    super(props);
-
-    this.onSave = this.onSave.bind(this);
-  }
-
-  onSave() {
-    this.props.onUpdateParsingReport({
-      productId: this.props.item.product.id,
-      parsingReport: parseProductAnswerMappings(this.props.item)
-    });
-  }
 
   getErrorList() {
     // Flatmap all mapping errors as well as question errors and remove duplicates
@@ -53,11 +40,7 @@ export default class SelectedProductList extends React.Component {
             content: 'View',
             onAction: () => this.context.easdk.redirect(`/products/${this.props.item.product.id}`)
           }
-        ]}
-        secondaryFooterAction={{
-            content: 'Save',
-            onAction: this.onSave
-        }} >
+        ]} >
         { errorList.length > 0 &&
           <Banner
             title="Product question(s) could not be saved"

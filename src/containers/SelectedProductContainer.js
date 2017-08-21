@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SelectedProduct from '../components/SelectedProduct';
-import { removeSelectedProduct, updateParsingReport } from '../actions/selectedProducts';
+import { removeSelectedProduct } from '../actions/selectedProducts';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -12,9 +12,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onDelete: (id) => {
       dispatch(removeSelectedProduct(id));
-    },
-    onUpdateParsingReport: (productParsingReport) => {
-      dispatch(updateParsingReport(productParsingReport));
     }
   }
 }
