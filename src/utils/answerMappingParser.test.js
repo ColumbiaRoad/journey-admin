@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze';
-import { parseProductAnswerMappings } from './answerMappingParser';
+import { parseProductAnswerMappings, parseProductSelectionAnswerMappings } from './answerMappingParser';
 
 const selectedProductValid = {
   product: {
@@ -388,6 +388,68 @@ describe('answerMappingParser', () => {
 
     deepFreeze(selectedProduct);
     expect(parseProductAnswerMappings(selectedProduct))
+      .toEqual(expectedConclusion);
+  });
+
+  it('parse multiple products', () => {
+    const selectedProducts = [{
+      product: {
+        id: 11152897108,
+        options: [{
+            id: 13721029460,
+            name: "Title",
+            position: 1,
+            product_id: 11152897108,
+            values: ["Default Title"]
+        }],
+        tags: "Best Seller",
+        title: "Another Product"
+      },
+      questions: [{
+        answerMapping: [],
+        option: "Title",
+        question: ""
+      }]
+    }, {
+      product: {
+        id: 11346562004,
+        options: [{
+          id: 13979357588,
+          name: "Title",
+          position: 1,
+          product_id: 11346562004,
+          values: ["Default Title"]
+        }],
+        tags: "",
+        title: "Third Product"
+      },
+      questions: [{
+        answerMapping: [
+          {id: "j6lutzp8", answer: "", value: ""}
+        ],
+        option: "Title",
+        question: ""
+      }]
+    }, {...selectedProductValid}];
+    const expectedConclusion = {
+      11152897108: {
+        Title: {valid: false, questionErrors: [2000, 2001], mappingErrors: []}
+      },
+      11346562004: {
+        Title: {valid: false, questionErrors: [2000], mappingErrors: [
+          {id: 'j6lutzp8', errorCode: 1000},
+          {id: 'j6lutzp8', errorCode: 1001}
+        ]}
+      },
+      11152891412: {
+        Size: {valid: true, questionErrors: [], mappingErrors: []},
+        Color: {valid: true, questionErrors: [], mappingErrors: []},
+        Material: {valid: true, questionErrors: [], mappingErrors: []}
+      }
+    };
+
+    deepFreeze(selectedProducts);
+    expect(parseProductSelectionAnswerMappings(selectedProducts))
       .toEqual(expectedConclusion);
   });
 });
