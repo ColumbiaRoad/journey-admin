@@ -24,13 +24,17 @@ class AdminPanel extends React.Component {
   }
 
   render() {
+    // Only show save option if products have been selected
+    const primaryAction = this.props.selectedProducts.length > 0 
+      ? {primaryAction: {
+        content: 'Save',
+        onAction: this.onSave
+      }}
+      : {};
     return (
       <Page
         title={this.props.selectedProducts.length > 0 ? 'Questionnaire' : ''}
-        primaryAction={{
-          content: 'Save',
-          onAction: this.onSave
-        }} >
+        {...primaryAction} >
         <Layout>
           <Layout.Section>
           { this.props.selectedProducts.length === 0 &&
