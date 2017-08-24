@@ -22,6 +22,12 @@ const rootQuestion = (state=initialState, action) => {
         ...state,
         parsingReport: action.parsingReports.rootQuestion
       };
+    case 'UPDATE_QUESTIONNAIRE':
+      return {
+        ...state,
+        ...action.questionnaire.rootQuestion,
+        parsingReport: {}
+      };
     default:
       return state;
   }
