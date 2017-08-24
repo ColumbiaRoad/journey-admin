@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Layout, EmptyState } from '@shopify/polaris';
+import 'whatwg-fetch';
 
 import SelectedProductListContainer from '../containers/SelectedProductListContainer'
 import ProductPickerContainer from '../containers/ProductPickerContainer';
@@ -21,6 +22,43 @@ class AdminPanel extends React.Component {
       answerMapping: this.props.rootQuestion.answerMapping
     }, rootAllowedValues);
     this.props.onSave(allParsingReports);
+  }
+
+  componentDidMount() {
+    let questionnaire;
+    fetch(`http://localhost:9000/api/v1/shop/${'max-tutorial-app-store.myshopify.com'}/questionnaire`, {
+      method: 'get',
+      headers: { 'Authorization': `Bearer ${this.props.token}` }
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      console.log(json);
+      questionnaire = json.questionnaire;
+      return fetch(`http://localhost:9000/api/v1/products?fields=id,options,title`, {
+        method: 'get',
+        headers: { 'Authorization': `Bearer ${this.props.token}` }
+      })
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((json) => {
+      const storeQuestionnaire = {
+        rootQuestion: questionnaire.rootQuestion,
+        selectedProducts: questionnaire.selectedProducts.map((item) => {
+          return {
+            product: json.find(e => e.id === parseInt(item.productId, 10)),
+            questions: item.questions
+          };
+        })
+      };
+      this.props.onFetch(storeQuestionnaire);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {
