@@ -44,9 +44,9 @@ class AdminPanel extends React.Component {
                   content: 'Select products',
                   onAction: () => { this.props.onToggle('set') }
                 }}
-                image="https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg"
+                image='https://cdn.shopify.com/s/assets/admin/empty-states-fresh/emptystate-pages-9fc4d1bc367cc2ce06e3404e37068eeaa8483fa736ea6c0e3bdc251807d1f76b.svg'
               >
-                <p>Select products to create questions and map possible answers to product option values.</p>
+                <p>Select products to create a questionnaire and boost your sales.</p>
               </EmptyState>
           }
           { (process.env.NODE_ENV !== 'development') &&
