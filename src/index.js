@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== 'development') {
   );
 } else {
   store.dispatch(setSelectedProducts(require('./products.json')));
+  store.dispatch(setJwtToken(process.env.REACT_APP_JWT_TOKEN));
   ReactDOM.render(
     <Provider store={store}>
       <AdminPanelContainer  />
