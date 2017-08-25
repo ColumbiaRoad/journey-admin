@@ -37,7 +37,7 @@ class AdminPanel extends React.Component {
 
   onSave() {
     const allParsingReports = parseProductSelectionAnswerMappings(this.props.selectedProducts);
-    const rootAllowedValues = this.props.selectedProducts.map(item => item.product.title);
+    const rootAllowedValues = this.props.selectedProducts.map(item => item.product.id);
     allParsingReports.rootQuestion = parseAnswerMapping({
       question: this.props.rootQuestion.question,
       answerMapping: this.props.rootQuestion.answerMapping
@@ -88,7 +88,15 @@ class AdminPanel extends React.Component {
     })
     .then((json) => {
       const storeQuestionnaire = {
-        rootQuestion: questionnaire.rootQuestion,
+        rootQuestion: {
+          ...questionnaire.rootQuestion,
+          answerMapping: questionnaire.rootQuestion.answerMapping.map((mapping) => {
+            return {
+              ...mapping,
+              value: parseInt(mapping.value, 10)
+            };
+          })
+        },
         selectedProducts: questionnaire.selectedProducts.map((item) => {
           return {
             product: json.find(e => e.id === parseInt(item.productId, 10)),
