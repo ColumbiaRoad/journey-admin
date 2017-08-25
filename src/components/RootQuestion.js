@@ -38,7 +38,9 @@ class RootQuestion extends React.Component {
   onUpdateAnswerMapping(updatedMapping) {
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
       return updatedMapping.id === mapping.id 
-      ? { ...updatedMapping, value: parseInt(updatedMapping.value.split('/')[1].trim(), 10) } 
+      ? { ...updatedMapping, value: updatedMapping.value.length > 0 
+        ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
+        : updatedMapping.value } 
       : mapping;
     });
 

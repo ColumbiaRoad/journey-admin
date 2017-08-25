@@ -15,9 +15,16 @@ class AdminPanel extends React.Component {
   }
 
   containsErrors(allParsingReports) {
-    return Object.keys(allParsingReports).map((key) => {
-      return allParsingReports[key].valid;
-    }).includes(false);
+    const { rootQuestion, ...selectedProducts } = allParsingReports;
+    const validity = [
+      rootQuestion.valid,
+      ...Object.keys(selectedProducts).map((key) => {
+        return Object.keys(selectedProducts[key]).map((report) => {
+          return selectedProducts[key][report].valid;
+        })
+      })
+    ];
+    return [].concat.apply([], validity).includes(false);
   }
 
   buildQuestionnaire() {
@@ -76,12 +83,15 @@ class AdminPanel extends React.Component {
       return response.json();
     })
     .then((json) => {
-      console.log(json);
-      questionnaire = json.questionnaire;
-      return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products?fields=id,options,title`, {
-        method: 'get',
-        headers: { 'Authorization': `Bearer ${this.props.token}` }
-      })
+      if (json.status === 'ok') {
+        questionnaire = json.questionnaire;
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products?fields=id,options,title`, {
+          method: 'get',
+          headers: { 'Authorization': `Bearer ${this.props.token}` }
+        })
+      } else {
+        return Promise.reject('No existing questionnaire found');
+      }
     })
     .then((response) => {
       return response.json();
