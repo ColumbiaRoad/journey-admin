@@ -14,6 +14,27 @@ class AdminPanel extends React.Component {
     this.onSave = this.onSave.bind(this);
   }
 
+  containsErrors(allParsingReports) {
+    return Object.keys(allParsingReports).map((key) => {
+      return allParsingReports[key].valid;
+    }).includes(false);
+  }
+
+  buildQuestionnaire() {
+    const questionnaire = {};
+    questionnaire.rootQuestion = {
+      question: this.props.rootQuestion.question,
+      answerMapping: this.props.rootQuestion.answerMapping
+    };
+    questionnaire.selectedProducts = this.props.selectedProducts.map((item) => {
+      return {
+        productId: item.product.id,
+        questions: item.questions
+      };
+    });
+    return questionnaire;
+  }
+
   onSave() {
     const allParsingReports = parseProductSelectionAnswerMappings(this.props.selectedProducts);
     const rootAllowedValues = this.props.selectedProducts.map(item => item.product.title);
@@ -22,13 +43,34 @@ class AdminPanel extends React.Component {
       answerMapping: this.props.rootQuestion.answerMapping
     }, rootAllowedValues);
     this.props.onSave(allParsingReports);
+    if(!this.containsErrors(allParsingReports)) {
+      fetch(`http://localhost:9000/api/v1/shop/questionnaire`, {
+        method: 'post',
+        headers: { 
+          'Authorization': `Bearer ${this.props.token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          questionnaire: this.buildQuestionnaire()
+        })
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
   }
 
   componentDidMount() {
     let questionnaire;
-    fetch(`http://localhost:9000/api/v1/shop/${'max-tutorial-app-store.myshopify.com'}/questionnaire`, {
+    fetch(`http://localhost:9000/api/v1/shop/questionnaire`, {
       method: 'get',
-      headers: { 'Authorization': `Bearer ${this.props.token}` }
+      headers: { 'Authorization': `Bearer ${this.props.token}` },
     })
     .then((response) => {
       return response.json();
@@ -57,7 +99,7 @@ class AdminPanel extends React.Component {
       this.props.onFetch(storeQuestionnaire);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }
 
