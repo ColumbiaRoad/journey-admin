@@ -108,9 +108,11 @@ class RootQuestion extends React.Component {
             // Rather pass data as props than making redux store more complicated
             const errors = mappingErrors.filter(e => e.id === mapping.id).map(e => e.errorCode);
             return <AnswerMapping
-                      mapping={{ ...mapping, value: `${this.props.products.find((p) => {
+                      mapping={{ ...mapping, value: typeof mapping.value === 'number'
+                      ? `${this.props.products.find((p) => {
                         return p.id === mapping.value;
-                      }).title} / ${mapping.value}`}}
+                      }).title} / ${mapping.value}`
+                      : mapping.value}}
                       choices={this.props.products.map(p => `${p.title} / ${p.id}`)}
                       onRemove={this.onRemoveAnswerMapping}
                       onChange={this.onUpdateAnswerMapping}
