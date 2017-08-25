@@ -37,7 +37,11 @@ class RootQuestion extends React.Component {
 
   onUpdateAnswerMapping(updatedMapping) {
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
-      return updatedMapping.id === mapping.id ? updatedMapping : mapping;
+      return updatedMapping.id === mapping.id 
+      ? { ...updatedMapping, value: updatedMapping.value.length > 0 
+        ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
+        : updatedMapping.value } 
+      : mapping;
     });
 
     this.props.onUpdate({
@@ -106,8 +110,12 @@ class RootQuestion extends React.Component {
             // Rather pass data as props than making redux store more complicated
             const errors = mappingErrors.filter(e => e.id === mapping.id).map(e => e.errorCode);
             return <AnswerMapping
-                      mapping={mapping}
-                      choices={this.props.products.map(p => p.title)}
+                      mapping={{ ...mapping, value: typeof mapping.value === 'number'
+                      ? `${this.props.products.find((p) => {
+                        return p.id === mapping.value;
+                      }).title} / ${mapping.value}`
+                      : mapping.value}}
+                      choices={this.props.products.map(p => `${p.title} / ${p.id}`)}
                       onRemove={this.onRemoveAnswerMapping}
                       onChange={this.onUpdateAnswerMapping}
                       id={mapping.id}

@@ -49,3 +49,10 @@ export const updateAllParsingReports = (parsingReports) => {
     parsingReports
   }
 }
+
+export const updateQuestionnaire = (questionnaire) => {
+  return {
+    type: 'UPDATE_QUESTIONNAIRE',
+    questionnaire
+  }
+}

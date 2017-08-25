@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import AdminPanel from '../components/AdminPanel';
 import { toggleProductPicker } from '../actions/productPicker';
-import { updateAllParsingReports } from '../actions/selectedProducts';
+import { updateAllParsingReports, updateQuestionnaire } from '../actions/selectedProducts';
 
 const mapStateToProps = (state) => {
   return {
     selectedProducts: state.selectedProducts,
-    rootQuestion: state.rootQuestion
+    rootQuestion: state.rootQuestion,
+    token: state.jwtToken
   };
 };
 
@@ -17,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSave: (allParsingReports) => {
       dispatch(updateAllParsingReports(allParsingReports));
+    },
+    onFetch: (questionnaire) => {
+      dispatch(updateQuestionnaire(questionnaire));
     }
   };
 }

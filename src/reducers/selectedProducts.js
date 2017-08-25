@@ -79,6 +79,13 @@ const selectedProducts = (state = [], action) => {
       });
     case 'REMOVE_ALL_SELECTED_PRODUCTS':
       return [];
+    case 'UPDATE_QUESTIONNAIRE':
+      return action.questionnaire.selectedProducts.map((item) => {
+        return {
+          ...item,
+          parsingReport: {}
+        };
+      });
     default:
       return state;
   }
