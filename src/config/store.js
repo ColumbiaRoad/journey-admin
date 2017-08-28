@@ -10,7 +10,10 @@ export const getStore = () => {
     applyMiddleware(ReduxThunk, logger),
     autoRehydrate()
   )(createStore)(reducer);
-  
-  persistStore(store, { storage: localForage });
+
+  persistStore(store, { 
+    storage: localForage,
+    blacklist: ['jwtToken']
+  });
   return store;
 }
