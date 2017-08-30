@@ -85,7 +85,8 @@ class AdminPanel extends React.Component {
     .then((json) => {
       if (json.status === 'ok') {
         questionnaire = json.questionnaire;
-        return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products?fields=id,options,title`, {
+        const productIds = questionnaire.selectedProducts.map(item => item.productId).join();
+        return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products?ids=${productIds}&fields=id,options,title`, {
           method: 'get',
           headers: { 'Authorization': `Bearer ${this.props.token}` }
         })
