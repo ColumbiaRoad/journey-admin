@@ -28,7 +28,6 @@ if (process.env.NODE_ENV !== 'development') {
             apiKey={apiKey}
             shopOrigin={shopOrigin}
             forceRedirect
-            debug
           >
           <AdminPanelContainer  />
       </EmbeddedApp>
