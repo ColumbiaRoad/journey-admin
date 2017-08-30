@@ -6,10 +6,10 @@
   },
   "proxies": {
     "/api/": {
-      "origin": "${JA_API_URL}/api/"
+      "origin": "${REACT_APP_BACKEND_URL}/api/"
     },
     "/auth/": {
-      "origin": "${JA_API_URL}/auth/"
+      "origin": "${REACT_APP_BACKEND_URL}/auth/"
     }
   }
 }
