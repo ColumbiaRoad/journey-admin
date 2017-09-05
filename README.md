@@ -3,7 +3,7 @@
 React application serving as frontend for our Journey Assistant Shopify app. This app is using Shopify's [Ploaris](https://polaris.shopify.com/components/get-started#app) as well as Shopify's [EASDK](https://github.com/Shopify/polaris/blob/master/documentation/Embedded%20apps.md) for embedded Shopify apps.
 
 ## Proxies
-
+Proxy routes are configured in `static.json`, more info on how the file is structured can be found [here](https://github.com/heroku/heroku-buildpack-static).
 #### `/auth/`
 All requests sent to this endpoint will be proxied to the `/auth/` path of our [backend](https://github.com/ColumbiaRoad/journey-assistant-api). This is necessary because Shopify does not allow using different (sub)domains for the same app.
 
