@@ -51,7 +51,7 @@ class AdminPanel extends React.Component {
     }, rootAllowedValues);
     this.props.onSave(allParsingReports);
     if(!this.containsErrors(allParsingReports)) {
-      fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/shop/questionnaire`, {
+      fetch(`/api/v1/shop/questionnaire`, {
         method: 'post',
         headers: { 
           'Authorization': `Bearer ${this.props.token}`,
@@ -75,7 +75,7 @@ class AdminPanel extends React.Component {
 
   componentDidMount() {
     let questionnaire;
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/shop/questionnaire`, {
+    fetch(`/api/v1/shop/questionnaire`, {
       method: 'get',
       headers: { 'Authorization': `Bearer ${this.props.token}` },
     })
@@ -86,7 +86,7 @@ class AdminPanel extends React.Component {
       if (json.status === 'ok') {
         questionnaire = json.questionnaire;
         const productIds = questionnaire.selectedProducts.map(item => item.productId).join();
-        return fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products?ids=${productIds}&fields=id,options,title`, {
+        return fetch(`/api/v1/products?ids=${productIds}&fields=id,options,title`, {
           method: 'get',
           headers: { 'Authorization': `Bearer ${this.props.token}` }
         })
