@@ -117,7 +117,7 @@ function addMappingError(report, errorCode) {
     valid: false,
     mappingErrors: [
       ...report.mappingErrors,
-      error
+      errorCode
     ]
   };
 }
