@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     onSave: (allParsingReports) => {
       dispatch(updateAllParsingReports(allParsingReports));
     },
-    onFetch: (questionnaire) => {
+    onQuestionnaire: (questionnaire) => {
       dispatch(updateQuestionnaire(questionnaire));
     }
   };

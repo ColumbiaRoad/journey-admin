@@ -9,6 +9,10 @@ export default class SelectedProductList extends React.Component {
     easdk: PropTypes.object,
   };
 
+  /**
+   * Retrieve all passed errors and remove duplicates
+   * @return {Array.<number>}
+   */
   getErrorList() {
     // Flatmap all mapping errors as well as question errors and remove duplicates
     return uniq([].concat(...Object.keys(this.props.item.parsingReport).map((k) => {

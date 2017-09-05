@@ -7,6 +7,13 @@ export const PARSING_ERRORS = {
   1003: 'Invalid value'
 };
 
+/**
+ * Parse all questions and answer mappings of the passed
+ * product selection. The keys of the returned object are the
+ * product IDs of the passed products.
+ * @param {Array} selectedProducts
+ * @returns {Object} parsing reports of all products
+ */
 export function parseProductSelectionAnswerMappings(selectedProducts) {
   const parsingReports = {};
   for(const selectedProduct of selectedProducts) {
@@ -15,6 +22,12 @@ export function parseProductSelectionAnswerMappings(selectedProducts) {
   return parsingReports;
 }
 
+/**
+ * Parse all product questions and answer mappings. The keys of the
+ * the returned object are option names of the passed product.
+ * @param {Object} selectedProduct
+ * @returns {Object} parsing reports of all product questions
+ */
 export function parseProductAnswerMappings(selectedProduct) {
   const parsingReport = {};
   for(const questionItem of selectedProduct.questions) {
@@ -26,6 +39,14 @@ export function parseProductAnswerMappings(selectedProduct) {
   return parsingReport;
 }
 
+/**
+ * Parse single question and answer mapping. The returned
+ * object contains separate lists of question and mapping
+ * errors as well as a boolean describing the validity.
+ * @param {Object} questionItem 
+ * @param {Array} allowedValues
+ * @returns {Object} parsing report
+ */
 export function parseAnswerMapping(questionItem, allowedValues) {
   // Group errors together because they might occur at the same time
   let report = { valid: true, questionErrors: [], mappingErrors: [] };
@@ -65,6 +86,13 @@ export function parseAnswerMapping(questionItem, allowedValues) {
   return report;
 }
 
+/**
+ * Returns updated report with validity set to false
+ * and the passed error code added to question errors.
+ * @param {Object} report 
+ * @param {number} errorCode
+ * @returns {Object} updated parsing report
+ */
 function addQuestionError(report, errorCode) {
   return {
     ...report,
@@ -76,7 +104,14 @@ function addQuestionError(report, errorCode) {
   };
 }
 
-function addMappingError(report, error) {
+/**
+ * Returns updated report with validity set to false
+ * and the passed error code added to mapping errors.
+ * @param {Object} report 
+ * @param {number} errorCode
+ * @returns {Object} updated parsing report
+ */
+function addMappingError(report, errorCode) {
   return {
     ...report,
     valid: false,
