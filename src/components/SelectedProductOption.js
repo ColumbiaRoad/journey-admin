@@ -15,6 +15,10 @@ export default class SelectedProductOption extends React.Component {
     this.onUpdateQuestion = this.onUpdateQuestion.bind(this);
   }
 
+  /**
+   * Add empty answer mapping to question
+   * and update it in store
+   */
   onAddAnswer() {
     const id = uniqid();
     // Update complete item to keep redux store simple
@@ -23,16 +27,17 @@ export default class SelectedProductOption extends React.Component {
       question: this.props.questionItem.question,
       answerMapping: [
         ...this.props.questionItem.answerMapping,
-        {
-          id: id,
-          answer: '',
-          value: ''
-        }
+        { id: id, answer: '', value: '' }
       ],
       productId: this.props.productId
     });
   }
 
+  /**
+   * Update answer mapping of question
+   * and update it in store
+   * @param {Object} updatedMapping 
+   */
   onUpdateAnswerMapping(updatedMapping) {
     // Update changed mapping in global list
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
@@ -48,6 +53,11 @@ export default class SelectedProductOption extends React.Component {
     });
   }
 
+  /**
+   * Remove specified answer mapping and update
+   * question in store
+   * @param {string} removeId 
+   */
   onRemoveAnswerMapping(removeId) {
     // Update global list
     const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping) => {
@@ -63,6 +73,10 @@ export default class SelectedProductOption extends React.Component {
     });
   }
 
+  /**
+   * Update question in store
+   * @param {string} question 
+   */
   onUpdateQuestion(question) {
     // Update complete item to keep redux store simple
     this.props.onSave({

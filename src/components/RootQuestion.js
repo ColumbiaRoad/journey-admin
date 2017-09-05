@@ -17,6 +17,10 @@ class RootQuestion extends React.Component {
     this.onRemoveAnswerMapping = this.onRemoveAnswerMapping.bind(this);
   }
 
+  /**
+   * Update root question in store
+   * @param {string} question 
+   */
   onUpdateQuestion(question) {
     this.props.onUpdate({
       ...this.props.questionItem,
@@ -24,6 +28,10 @@ class RootQuestion extends React.Component {
     });
   }
 
+  /**
+   * Add empty answer mapping to root question
+   * and update it in store
+   */
   onAddAnswer() {
     const id = uniqid();
     this.props.onUpdate({
@@ -35,10 +43,16 @@ class RootQuestion extends React.Component {
     });
   }
 
+  /**
+   * Update answer mapping of root question
+   * and update it in store
+   * @param {Object} updatedMapping 
+   */
   onUpdateAnswerMapping(updatedMapping) {
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
       return updatedMapping.id === mapping.id 
-      ? { ...updatedMapping, value: updatedMapping.value.length > 0 
+      ? { ...updatedMapping, value: updatedMapping.value.length > 0
+        // Only save product ID
         ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
         : updatedMapping.value } 
       : mapping;
@@ -50,6 +64,11 @@ class RootQuestion extends React.Component {
     });
   }
 
+  /**
+   * Remove specified answer mapping and update
+   * root question in store
+   * @param {string} removeId 
+   */
   onRemoveAnswerMapping(removeId) {
     const newAnswerMapping = this.props.questionItem.answerMapping.filter((mapping) => {
       return removeId !== mapping.id;
@@ -61,6 +80,10 @@ class RootQuestion extends React.Component {
     });
   }
 
+  /**
+   * Retrieve all passed errors and remove duplicates
+   * @return {Array.<number>}
+   */
   getErrorList() {
     // Check if parsingReport has any content
     if(this.props.questionItem.parsingReport.questionErrors) {
@@ -110,6 +133,7 @@ class RootQuestion extends React.Component {
             // Rather pass data as props than making redux store more complicated
             const errors = mappingErrors.filter(e => e.id === mapping.id).map(e => e.errorCode);
             return <AnswerMapping
+                      // Convert 'product ID' into 'product title / product ID' for UI
                       mapping={{ ...mapping, value: typeof mapping.value === 'number'
                       ? `${this.props.products.find((p) => {
                         return p.id === mapping.value;
