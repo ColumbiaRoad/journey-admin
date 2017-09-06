@@ -17,6 +17,8 @@ const rootQuestion = (state=initialState, action) => {
         ...state,
         parsingReport: action.parsingReport
       };
+    case 'REMOVE_ALL_SELECTED_PRODUCTS':
+      return initialState;
     case 'UPDATE_ALL_PARSING_REPORTS':
       return {
         ...state,
