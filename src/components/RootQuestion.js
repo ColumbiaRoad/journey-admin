@@ -50,12 +50,17 @@ class RootQuestion extends React.Component {
    */
   onUpdateAnswerMapping(updatedMapping) {
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
-      return updatedMapping.id === mapping.id 
-      ? { ...updatedMapping, value: updatedMapping.value.length > 0
-        // Only save product ID
-        ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
-        : updatedMapping.value } 
-      : mapping;
+      if(updatedMapping.id === mapping) {
+        return {
+          ...updatedMapping, 
+          value: updatedMapping.value.length > 0
+            // Only save product ID
+            ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
+            : updatedMapping.value
+        }
+      } else {
+        return mapping;
+      }
     });
 
     this.props.onUpdate({
@@ -78,6 +83,28 @@ class RootQuestion extends React.Component {
       ...this.props.questionItem,
       answerMapping: newAnswerMapping
     });
+  }
+
+  /**
+   * Convert `product.id` to `product.title / product.id`
+   * if possible, otherwise return empty string
+   * @param {Object} mapping
+   * @returns {string} mapped value
+   */
+  convertMapping(mapping) {
+    const product = this.props.products.find((p) => {
+      return p.id === mapping.value;
+    });
+    let value = '';
+    if(typeof mapping.value === 'number') {
+      value = product 
+        ? `${product.title} / ${mapping.value}`
+        : '';
+    }
+    return { 
+      ...mapping,
+      value
+    }
   }
 
   /**
@@ -133,12 +160,7 @@ class RootQuestion extends React.Component {
             // Rather pass data as props than making redux store more complicated
             const errors = mappingErrors.filter(e => e.id === mapping.id).map(e => e.errorCode);
             return <AnswerMapping
-                      // Convert 'product ID' into 'product title / product ID' for UI
-                      mapping={{ ...mapping, value: typeof mapping.value === 'number'
-                      ? `${this.props.products.find((p) => {
-                        return p.id === mapping.value;
-                      }).title} / ${mapping.value}`
-                      : mapping.value}}
+                      mapping={this.convertMapping(mapping)}
                       choices={this.props.products.map(p => `${p.title} / ${p.id}`)}
                       onRemove={this.onRemoveAnswerMapping}
                       onChange={this.onUpdateAnswerMapping}
