@@ -1,14 +1,14 @@
-# journey-assistant-admin-panel
+# journey-admin
 
 React application serving as frontend for our Journey Assistant Shopify app. This app is using Shopify's [Ploaris](https://polaris.shopify.com/components/get-started#app) as well as Shopify's [EASDK](https://github.com/Shopify/polaris/blob/master/documentation/Embedded%20apps.md) for embedded Shopify apps.
 
 ## Proxies
 Proxy routes are configured in `static.json`, more info on how the file is structured can be found [here](https://github.com/heroku/heroku-buildpack-static).
 #### `/auth/`
-All requests sent to this endpoint will be proxied to the `/auth/` path of our [backend](https://github.com/ColumbiaRoad/journey-assistant-api). This is necessary because Shopify does not allow using different (sub)domains for the same app.
+All requests sent to this endpoint will be proxied to the `/auth/` path of our [backend](https://github.com/ColumbiaRoad/journey-app). This is necessary because Shopify does not allow using different (sub)domains for the same app.
 
 #### `/api/`
-Similarly to the first proxy, requests sent to this endpoint will be proxied to the `/api/` path of our [backend](https://github.com/ColumbiaRoad/journey-assistant-api). This allows our React app to save questionnaires in our database as well as accessing Shopify's API. By doing this, no client secrets or Shopify access tokens are needed on the frontend.
+Similarly to the first proxy, requests sent to this endpoint will be proxied to the `/api/` path of our [backend](https://github.com/ColumbiaRoad/journey-app). This allows our React app to save questionnaires in our database as well as accessing Shopify's API. By doing this, no client secrets or Shopify access tokens are needed on the frontend.
 
 ## Configured Scripts
 * `npm start` start server on port 3000
@@ -31,7 +31,7 @@ For development *only*:
     scope: 'api' // This is necessary to access the /api/ endpoint of our backend
   }
 ```
-Check the [getJWTToken function](https://github.com/ColumbiaRoad/journey-assistant-api/blob/master/src/helpers/utils.js) to see how to generate a valid token.
+Check the [getJWTToken function](https://github.com/ColumbiaRoad/journey-app/blob/master/src/helpers/utils.js) to see how to generate a valid token.
 
 **If you introduce new environment varibales, remember that they have to start with `REACT_APP_` to be accessible to your code**
 
