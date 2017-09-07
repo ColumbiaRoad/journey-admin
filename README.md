@@ -42,9 +42,10 @@ Check the [getJWTToken function](https://github.com/ColumbiaRoad/journey-app/blo
 * Start your backend application if it is not running already
 
 ## Heroku setup
-* Deploy code to Heroku with [custom buildpack](https://github.com/mars/create-react-app-buildpack):
+* Create app on Heroku with [custom buildpack](https://github.com/mars/create-react-app-buildpack):
 ```bash
 heroku create $APP_NAME --buildpack https://github.com/mars/create-react-app-buildpack.git --region eu
 ```
 * Configure environment varibales according to `.env-template`
+* Deploy code to Heroku: `git push heroku`
 
