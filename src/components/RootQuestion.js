@@ -50,14 +50,14 @@ class RootQuestion extends React.Component {
    */
   onUpdateAnswerMapping(updatedMapping) {
     const newAnswerMapping = this.props.questionItem.answerMapping.map((mapping) => {
-      if(updatedMapping.id === mapping) {
+      if(updatedMapping.id === mapping.id) {
         return {
           ...updatedMapping, 
           value: updatedMapping.value.length > 0
             // Only save product ID
             ? parseInt(updatedMapping.value.split('/')[1].trim(), 10) 
             : updatedMapping.value
-        }
+        };
       } else {
         return mapping;
       }
