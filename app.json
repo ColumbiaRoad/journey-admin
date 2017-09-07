@@ -1,0 +1,23 @@
+{
+  "name": "journey-admin",
+  "scripts": {
+  },
+  "env": {
+    "REACT_APP_BACKEND_URL": {
+      "required": true
+    },
+    "REACT_APP_SHOPIFY_API_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/mars/create-react-app-buildpack.git"
+    }
+  ]
+}
