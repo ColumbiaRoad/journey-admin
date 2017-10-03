@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Layout, EmptyState } from '@shopify/polaris';
+import { Page, Layout, EmptyState, Banner } from '@shopify/polaris';
 import 'whatwg-fetch';
 
 import SelectedProductListContainer from '../containers/SelectedProductListContainer'
@@ -173,6 +173,7 @@ class AdminPanel extends React.Component {
       this.props.onQuestionnaire(this.restoreQuestionnaire(questionnaire, products));
     })
     .catch((err) => {
+      this.props.onLoadingError();
       console.error(err);
     });
   }
@@ -185,11 +186,23 @@ class AdminPanel extends React.Component {
         onAction: this.onSave
       }}
       : {};
+    const loadingComplete = this.props.dataSource.localComplete && this.props.dataSource.remoteComplete;
+    const onlyLocalData = this.props.dataSource.localData && !this.props.dataSource.remoteData;
+    const relyingOnLocalForage = loadingComplete && onlyLocalData;
     return (
       <Page
         title={this.props.selectedProducts.length > 0 ? 'Questionnaire' : ''}
         {...primaryAction} >
         <Layout>
+          { (!this.props.dataSource.bannerDimissed && relyingOnLocalForage) && 
+            <Layout.Section>
+                <Banner
+                  onDismiss={() => { this.props.onDismissBanner() }}
+                  status='warning'>
+                  Could not retrieve questionnaire, relying on local data. Please save your questionnaire.
+                </Banner>
+            </Layout.Section>
+          }
           <Layout.Section>
           { this.props.selectedProducts.length === 0 &&
               <EmptyState
