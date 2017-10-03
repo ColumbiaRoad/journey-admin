@@ -13,7 +13,7 @@ export const getStore = () => {
 
   persistStore(store, { 
     storage: localForage,
-    blacklist: ['jwtToken']
+    blacklist: ['jwtToken', 'dataSource']
   });
   return store;
 }

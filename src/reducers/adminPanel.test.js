@@ -18,6 +18,13 @@ describe('adminPanel', () => {
         question: '',
         answerMapping: [],
         parsingReport: {}
+      },
+      dataSource: {
+        localData: false,
+        localComplete: false,
+        remoteData: false,
+        remoteComplete: false,
+        bannerDimissed: false
       }
     }
 
